@@ -460,7 +460,7 @@
                                 <#list record.item as item>
                                     <#if item.itemtype != "Discount" || item.itemtype != "Descuento">
                                         <tr>
-                                            <td colspan="39" style="align: center; border-bottom:0.5px single black;" ><b>Concepto   ${item_index+1} </b></td>
+                                            <td colspan="40" style="align: center; border-bottom:0.5px single black;" ><b>Concepto   ${item_index+1} </b></td>
                                         </tr>
                                         <#--  Cabecera de tabla  -->
                                         <tr >
@@ -475,7 +475,7 @@
                                             <td colspan="3" style="border-bottom:0.5px single black; vertical-align: middle; align: left; ">
                                                 <strong>No. Parte</strong>
                                             </td>
-                                            <td colspan="2" style="border-bottom:0.5px single black; vertical-align: middle; align: center; font-size:8px">
+                                            <td colspan="3" style="border-bottom:0.5px single black; vertical-align: middle; align: center; font-size:8px">
                                                 <strong>Cant.</strong>
                                             </td>
                                             <td colspan="2" style="border-bottom:0.5px single black; vertical-align: middle; align: left; font-size:7px">
@@ -509,7 +509,15 @@
                                                 <td colspan="4" style="align: center; font-size:8px">${comercioExterior[contador].atributos.FraccionArancelaria}<br/><br/></td>
                                             </#if>
                                                 <td colspan="3" style="align: left; ">${item.item}<br/><br/></td>
-                                                <td colspan="2" style="align: center; font-size: 7pt;">${Conceptos[contador].atributos.Cantidad?number?string[",##0.0"]}<br/><br/></td>
+                                                <#assign cantidad = Conceptos[contador].atributos.Cantidad?number>
+                                                <#assign decimales = cantidad?keep_after(".")?number>
+                                                <#if (cantidad gt 0 && cantidad lt 999) && (decimales gt 0)>
+                                                    <td colspan="3" style="align: center; font-size: 6pt;">${cantidad}<br/><br/></td>
+                                                <#elseif cantidad gt 999 && decimales gt 0>
+                                                    <td colspan="3" style="align: center; font-size: 6pt;">${cantidad}<br/><br/></td>
+                                                <#else>
+                                                    <td colspan="3" style="align: center; font-size: 7pt;">${cantidad?string[",##0"]}<br/><br/></td>
+                                                </#if>
                                                 <td colspan="2" style="align: left; ">${item.units}<br/><br/></td>
                                                 <td colspan="3" style="align: left; ">${Conceptos[contador].atributos.ClaveUnidad}<br/><br/></td>
                                                 <#if comercioExterior?has_content>
@@ -563,7 +571,7 @@
                         <table style="width: 100%; border-left:0.5px single black; border-right:0.5px single black; border-bottom:0.5px single black;  border-top:0.5px single black;  table-layout: fixed; word-break: break-all; border-collapse: collapse; margin-top:20px;">
                             <#list record.item as item>
                                 <tr>
-                                    <td colspan="39" style="align: center; border-bottom:0.5px single black;" ><b>Concepto   ${item_index+1} </b></td>
+                                    <td colspan="40" style="align: center; border-bottom:0.5px single black;" ><b>Concepto   ${item_index+1} </b></td>
                                 </tr>
                                 <tr style="height: 18pt;" >
                                     <td colspan="4" style="border-bottom:0.5px single black; vertical-align: middle; align: center;">
@@ -577,7 +585,7 @@
                                     <td colspan="3" style="border-bottom:0.5px single black; vertical-align: middle; align: left; ">
                                         <strong>No. Parte</strong>
                                     </td>
-                                    <td colspan="2" style="border-bottom:0.5px single black; vertical-align: middle; align: center; font-size:8px">
+                                    <td colspan="3" style="border-bottom:0.5px single black; vertical-align: middle; align: center; font-size:8px">
                                         <strong>Cant.</strong>
                                     </td>
                                     <td colspan="2" style="border-bottom:0.5px single black; vertical-align: middle; align: left; font-size:7px">
@@ -609,7 +617,15 @@
                                     <td colspan="4" style="align: center; ">${dataXML.Conceptos.Concepto.atributos.ClaveProdServ}<br/><br/></td>
                                     <td colspan="4" style="align: center; font-size:8px">${dataXML.Complemento.ComercioExterior.Mercancias.Mercancia.atributos.FraccionArancelaria}<br/><br/></td>
                                     <td colspan="3" style="align: left; ">${item.item}<br/><br/></td>
-                                    <td colspan="2" style="align: center; font-size: 7pt;">${dataXML.Conceptos.Concepto.atributos.Cantidad}<br/><br/></td>
+                                    <#assign cantidad = dataXML.Conceptos.Concepto.atributos.Cantidad?number>
+                                    <#assign decimales = cantidad?keep_after(".")?number>
+                                    <#if (cantidad gt 0 && cantidad lt 999) && (decimales gt 0)>
+                                        <td colspan="3" style="align: center; font-size: 6pt;">${cantidad}<br/><br/></td>
+                                    <#elseif cantidad gt 999 && decimales gt 0>
+                                        <td colspan="3" style="align: center; font-size: 6pt;">${cantidad}<br/><br/></td>
+                                    <#else>
+                                        <td colspan="3" style="align: center; font-size: 7pt;">${cantidad?string[",##0"]}<br/><br/></td>
+                                    </#if>
                                     <td colspan="2" style="align: left; ">${item.units}<br/><br/></td>
                                     <td colspan="3" style="align: left; ">${dataXML.Conceptos.Concepto.atributos.ClaveUnidad}<br/><br/></td>
                                     <td colspan="4" style="align: left; ">${item.custcol_efx_fe_ce_uni_aduana}<br/><br/></td>
@@ -882,7 +898,15 @@
                             <tr>
                             <td colspan="2" style="align: center;">${item.custcol_mx_txn_line_sat_item_code?keep_before(" ")}<br/><br/></td>
                             <td colspan="3" style="align: left;">${item.item}<br/><br/></td>
-                            <td colspan="1" style="align: center; font-size: 7pt;">${item.quantity}<br/><br/></td>
+                            <#assign cantidad = item.quantity?number>
+                            <#assign decimales = cantidad?keep_after(".")?number>
+                            <#if (cantidad gt 0 && cantidad lt 999) && (decimales gt 0)>
+                                <td colspan="3" style="align: center; font-size: 6pt;">${cantidad}<br/><br/></td>
+                            <#elseif cantidad gt 999 && decimales gt 0>
+                                <td colspan="3" style="align: center; font-size: 6pt;">${cantidad}<br/><br/></td>
+                            <#else>
+                                <td colspan="3" style="align: center; font-size: 7pt;">${cantidad?string[",##0"]}<br/><br/></td>
+                            </#if>
                             <td colspan="1" style="align: left; ">${item.units}<br/><br/></td>
                             <td colspan="1" style="align: left; ">${units_sat}<br/><br/></td>
                             <td colspan="6" style="align: left;">${item.description}<br/><br/></td>
@@ -1210,7 +1234,7 @@
                                 <td colspan="3" style="border-bottom:0.5px single black; vertical-align: middle; align: left; ">
                                     <strong>No. Parte</strong>
                                 </td>
-                                <td colspan="2" style="border-bottom:0.5px single black; vertical-align: middle; align: center; font-size:8px">
+                                <td colspan="3" style="border-bottom:0.5px single black; vertical-align: middle; align: center; font-size:8px">
                                     <strong>Cant.</strong>
                                 </td>
                                 <td colspan="2" style="border-bottom:0.5px single black; vertical-align: middle; align: left; font-size:7px">
@@ -1274,7 +1298,15 @@
                                 <td colspan="4" style="align: center; ">${item.custcol_mx_txn_line_sat_item_code?keep_before(" ")}<br/><br/></td>
                                 <td colspan="4" style="align: center; font-size:8px">${item.custcol_efx_fe_ce_farancel_code}<br/><br/></td>
                                 <td colspan="3" style="align: left; ">${item.item}<br/><br/></td>
-                                <td colspan="2" style="align: center; font-size: 7pt;">${item.quantity}<br/><br/></td>
+                                <#assign cantidad = item.quantity>
+                                <#assign decimales = cantidad?keep_after(".")?number>
+                                <#if (cantidad gt 0 && cantidad lt 999) && (decimales gt 0)>
+                                    <td colspan="3" style="align: center; font-size: 6pt;">${cantidad}<br/><br/></td>
+                                <#elseif cantidad gt 999 && decimales gt 0>
+                                    <td colspan="3" style="align: center; font-size: 6pt;">${cantidad}<br/><br/></td>
+                                <#else>
+                                    <td colspan="3" style="align: center; font-size: 7pt;">${cantidad?string[",##0"]}<br/><br/></td>
+                                </#if>
                                 <td colspan="2" style="align: left; ">${item.units}<br/><br/></td>
                                 <#if item.units == "KG" || item.units == "Kg" || item.units == "kg">
                                     <td colspan="3" style="align: left; ">58<br/><br/></td>
@@ -1527,7 +1559,15 @@
                             <tr>
                             <td colspan="2" style="align: center;">${item.custcol_mx_txn_line_sat_item_code?keep_before(" ")}<br/><br/></td>
                             <td colspan="3" style="align: left;">${item.item}<br/><br/></td>
-                            <td colspan="1" style="align: center; font-size: 7pt;">${item.quantity}<br/><br/></td>
+                            <#assign cantidad = item.quantity>
+                            <#assign decimales = cantidad?keep_after(".")?number>
+                            <#if (cantidad gt 0 && cantidad lt 999) && (decimales gt 0)>
+                                <td colspan="3" style="align: center; font-size: 6pt;">${cantidad}<br/><br/></td>
+                            <#elseif cantidad gt 999 && decimales gt 0>
+                                <td colspan="3" style="align: center; font-size: 6pt;">${cantidad}<br/><br/></td>
+                            <#else>
+                                <td colspan="3" style="align: center; font-size: 7pt;">${cantidad?string[",##0"]}<br/><br/></td>
+                            </#if>
                             <td colspan="1" style="align: left; ">${item.units}<br/><br/></td>
                             <td colspan="1" style="align: left; ">${units_sat}<br/><br/></td>
                             <td colspan="6" style="align: left;">${item.description}<br/><br/></td>
