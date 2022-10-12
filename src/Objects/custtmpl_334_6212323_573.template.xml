@@ -1222,7 +1222,7 @@
                                 <#assign desglose = "No hay JSON de linea">
                             </#if>
                             <tr>
-                                <td colspan="39" style="align: center; border-bottom:0.5px single black;" ><b>Concepto   ${item_index+1} </b></td>
+                                <td colspan="40" style="align: center; border-bottom:0.5px single black;" ><b>Concepto   ${item_index+1} </b></td>
                             </tr>
                             <tr style="height: 18pt;" >
                                 <td colspan="4" style="border-bottom:0.5px single black; vertical-align: middle; align: center;">
