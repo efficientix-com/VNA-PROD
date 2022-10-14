@@ -1014,7 +1014,7 @@
                                         </#if>
 
                                         <#--  AQUIIIIIIIIII  -->
-                                        <#if record.shippingcost?has_content>
+                                        <#if record.shippingcost?number gt 0>
                                             <tr>
                                             <td style="align: right; width: 180px;">
                                                 <strong>ENVÍO: &nbsp; &nbsp;</strong>
@@ -1572,7 +1572,9 @@
                             <td colspan="1" style="align: left; ">${units_sat}<br/><br/></td>
                             <td colspan="6" style="align: left;">${item.description}<br/><br/></td>
 
-                            <#if desglose.iva.name?has_content>
+
+
+                              <#if desglose.iva.name?has_content>
                                 <td colspan="2" style="align: left;">${desglose.iva.factor} IVA <br/> <span style=" font-size: 7pt">${desglose.iva.importe}</span></td>
                             </#if>
 
@@ -1677,7 +1679,7 @@
                                 </tr>
                             </#if>
 
-                            <#if record.shippingcost?has_content>
+                            <#if record.shippingcost?number gt 0>
                                 <tr>
                                 <td style="align: right; width: 180px;">
                                     <strong>ENVÍO: &nbsp; &nbsp;</strong>
@@ -1741,7 +1743,7 @@
 
             </#if>
         </#if>
-
-        <span style="margin-top:5px;">Este documento es una representaci&oacute;n impresa de un CFDi</span>
+        <#assign aDateTime = .now>
+        <span style="margin-top:5px;">"Este documento es una representaci&oacute;n impresa de un CFDi". <b>Usuario:</b> ${user.firstname} ${user.lastname} <b>Fecha de impresión:</b> ${aDateTime?date}</span>
     </body>
 </pdf>
