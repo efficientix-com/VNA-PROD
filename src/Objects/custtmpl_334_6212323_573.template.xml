@@ -1679,7 +1679,7 @@
                                 </tr>
                             </#if>
 
-                            <#if record.shippingcost?number gt 0>
+                            <#if record.shippingcost?string != "" || record.shippingcost?string != 0 >
                                 <tr>
                                 <td style="align: right; width: 180px;">
                                     <strong>ENVÍO: &nbsp; &nbsp;</strong>
