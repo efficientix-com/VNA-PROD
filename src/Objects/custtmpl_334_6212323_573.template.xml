@@ -228,7 +228,7 @@
                                         <tr>
                                             <td style="width: 82pt; align: right;">FACTURA</td>
                                             <td style="width: 2pt;">:</td>
-                                            <td style="width: 85pt;">${certData.Serie}${certData.FolioResSat}</td>
+                                            <td style="width: 85pt;">${certData.Serie}</td>
                                         </tr>
                                         <tr>
                                             <td style="width: 78pt; align: right;">Folio Fiscal</td>
@@ -1013,8 +1013,7 @@
                                             </tr>
                                         </#if>
 
-                                        <#--  AQUIIIIIIIIII  -->
-                                        <#if record.shippingcost?number gt 0>
+                                        <#if record.shippingcost?string != "" || record.shippingcost?string != 0 >
                                             <tr>
                                             <td style="align: right; width: 180px;">
                                                 <strong>ENVÍO: &nbsp; &nbsp;</strong>
