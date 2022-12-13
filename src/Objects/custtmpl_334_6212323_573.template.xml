@@ -228,7 +228,7 @@
                                         <tr>
                                             <td style="width: 82pt; align: right;">FACTURA</td>
                                             <td style="width: 2pt;">:</td>
-                                            <td style="width: 85pt;">${certData.Serie}</td>
+                                            <td style="width: 85pt;">${record.tranid}</td>
                                         </tr>
                                         <tr>
                                             <td style="width: 78pt; align: right;">Folio Fiscal</td>
@@ -1013,7 +1013,8 @@
                                             </tr>
                                         </#if>
 
-                                        <#if record.shippingcost?string != "" || record.shippingcost?string != 0 >
+                                        <#assign envio = record.shippingcost?number>
+                                        <#if envio != 0>
                                             <tr>
                                             <td style="align: right; width: 180px;">
                                                 <strong>ENVÍO: &nbsp; &nbsp;</strong>
@@ -1678,7 +1679,8 @@
                                 </tr>
                             </#if>
 
-                            <#if record.shippingcost?string != "" || record.shippingcost?string != 0 >
+                            <#assign envio = record.shippingcost?number>
+                            <#if envio != 0>
                                 <tr>
                                 <td style="align: right; width: 180px;">
                                     <strong>ENVÍO: &nbsp; &nbsp;</strong>
