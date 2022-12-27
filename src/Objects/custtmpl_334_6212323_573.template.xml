@@ -518,7 +518,11 @@
                                                 <#else>
                                                     <td colspan="3" style="align: center; font-size: 7pt;">${cantidad?string[",##0"]}<br/><br/></td>
                                                 </#if>
-                                                <td colspan="2" style="align: left; ">${item.units}<br/><br/></td>
+                                                <#if item.itemtype == "kit" || item.itemtype == "Kit">
+                                                    <td colspan="2" style="align: left; ">${item.itemtype}<br/><br/></td>
+                                                <#else>
+                                                    <td colspan="2" style="align: left; ">${item.units}<br/><br/></td>
+                                                </#if>
                                                 <td colspan="3" style="align: left; ">${Conceptos[contador].atributos.ClaveUnidad}<br/><br/></td>
                                                 <#if comercioExterior?has_content>
                                                     <td colspan="4" style="align: left; ">${item.custcol_efx_fe_ce_uni_aduana}<br/><br/></td>
@@ -626,7 +630,11 @@
                                     <#else>
                                         <td colspan="3" style="align: center; font-size: 7pt;">${cantidad?string[",##0"]}<br/><br/></td>
                                     </#if>
-                                    <td colspan="2" style="align: left; ">${item.units}<br/><br/></td>
+                                    <#if item.itemtype == "kit" || item.itemtype == "Kit">
+                                        <td colspan="2" style="align: left; ">${item.itemtype}<br/><br/></td>
+                                    <#else>
+                                        <td colspan="2" style="align: left; ">${item.units}<br/><br/></td>
+                                    </#if>
                                     <td colspan="3" style="align: left; ">${dataXML.Conceptos.Concepto.atributos.ClaveUnidad}<br/><br/></td>
                                     <td colspan="4" style="align: left; ">${item.custcol_efx_fe_ce_uni_aduana}<br/><br/></td>
                                     <td colspan="6" style="align: left; " >${dataXML.Conceptos.Concepto.atributos.Descripcion}<br/><br/></td>
@@ -890,6 +898,9 @@
                                 <#else>
                                 <#assign units_sat = "">
                             </#if>
+                            <#if item.itemtype == "kit" || item.itemtype == "Kit" || item.itemtype == "KIT">
+                                <#assign units_sat = "KT">
+                            </#if>
                             <#if item.units == "PZA" || item.units == "Pza">
                                 <#assign units_sat = "H87">
                                 <#else>
@@ -907,8 +918,16 @@
                             <#else>
                                 <td colspan="1" style="align: center; font-size: 7pt;">${cantidad?string[",##0"]}<br/><br/></td>
                             </#if>
-                            <td colspan="1" style="align: left; ">${item.units}<br/><br/></td>
-                            <td colspan="1" style="align: left; ">${units_sat}<br/><br/></td>
+                            <#if item.itemtype == "kit" || item.itemtype == "Kit" || item.itemtype == "KIT">
+                                <td colspan="1" style="align: left; ">${item.itemtype}<br/><br/></td>
+                            <#else>
+                                <td colspan="1" style="align: left; ">${item.units}<br/><br/></td>
+                            </#if>
+                            <#if item.itemtype == "kit" || item.itemtype == "Kit" || item.itemtype == "KIT">
+                                <td colspan="1" style="align: left; ">KT<br/><br/></td>
+                            <#else>
+                                <td colspan="1" style="align: left; ">${units_sat}<br/><br/></td>
+                            </#if>
                             <td colspan="6" style="align: left;">${item.description}<br/><br/></td>
 
                             <#if desglose.iva.name?has_content>
@@ -1013,14 +1032,16 @@
                                             </tr>
                                         </#if>
 
-                                        <#assign envio = record.shippingcost?number>
-                                        <#if envio != 0>
-                                            <tr>
-                                            <td style="align: right; width: 180px;">
-                                                <strong>ENVÍO: &nbsp; &nbsp;</strong>
-                                            </td>
-                                            <td style="align: right; width: 90px; border-bottom:1.5px single silver;">${record.shippingcost}</td>
-                                            </tr>
+                                        <#if record.shippingcost?has_content || record.shippingcost != "0" || record.shippingcost != "" >
+                                            <#assign envio = record.shippingcost?string.computer>
+                                            <#if envio?number != 0>
+                                                <tr>
+                                                <td style="align: right; width: 180px;">
+                                                    <strong>ENVÍO: &nbsp; &nbsp;</strong>
+                                                </td>
+                                                <td style="align: right; width: 90px; border-bottom:1.5px single silver;">${record.shippingcost}</td>
+                                                </tr>
+                                            </#if>
                                         </#if>
 
                                         <tr>
@@ -1294,6 +1315,9 @@
                                 <#else>
                                 <#assign units_sat = item.units>
                             </#if>
+                            <#if item.itemtype == "kit" || item.itemtype == "Kit">
+                                <#assign units_sat = "KT">
+                            </#if>
                             <tr>
                                 <td colspan="4" style="align: center; ">${item.custcol_mx_txn_line_sat_item_code?keep_before(" ")}<br/><br/></td>
                                 <td colspan="4" style="align: center; font-size:8px">${item.custcol_efx_fe_ce_farancel_code}<br/><br/></td>
@@ -1307,14 +1331,20 @@
                                 <#else>
                                     <td colspan="3" style="align: center; font-size: 7pt;">${cantidad?string[",##0"]}<br/><br/></td>
                                 </#if>
-                                <td colspan="2" style="align: left; ">${item.units}<br/><br/></td>
+                                <#if item.itemtype == "kit" || item.itemtype == "Kit">
+                                    <td colspan="2" style="align: left; ">${item.itemtype}<br/><br/></td>
+                                <#else>
+                                    <td colspan="2" style="align: left; ">${item.units}<br/><br/></td>
+                                </#if>
                                 <#if item.units == "KG" || item.units == "Kg" || item.units == "kg">
                                     <td colspan="3" style="align: left; ">58<br/><br/></td>
                                 <#else>
-                                    <td colspan="3" style="align: left; ">${units_sat}<br/><br/></td>
+                                    <#if item.itemtype == "kit" || item.itemtype == "Kit" || item.itemtype == "KIT">
+                                        <td colspan="1" style="align: left; ">KT<br/><br/></td>
+                                    <#else>
+                                        <td colspan="1" style="align: left; ">${units_sat}<br/><br/></td>
+                                    </#if>
                                 </#if>
-                                    <#--  <td colspan="3" style="align: left; ">${units_sat}<br/><br/></td>  -->
-                                <#--  <td colspan="3" style="align: left; ">${units_sat}<br/><br/></td>  -->
                                 <td colspan="4" style="align: left; ">${item.custcol_efx_fe_ce_uni_aduana}<br/><br/></td>
                                 <td colspan="6" style="align: left; " >${item.description}<br/><br/></td>
 
@@ -1556,6 +1586,9 @@
                                 <#else>
                                 <#assign units_sat = "">
                             </#if>
+                            <#if item.itemtype == "kit" || item.itemtype == "Kit">
+                                <#assign units_sat = "KT">
+                            </#if>
                             <tr>
                             <td colspan="2" style="align: center;">${item.custcol_mx_txn_line_sat_item_code?keep_before(" ")}<br/><br/></td>
                             <td colspan="4" style="align: left;">${item.item}<br/><br/></td>
@@ -1568,7 +1601,11 @@
                             <#else>
                                 <td colspan="1" style="align: center; font-size: 7pt;">${cantidad?string[",##0"]}<br/><br/></td>
                             </#if>
-                            <td colspan="1" style="align: left; ">${item.units}<br/><br/></td>
+                            <#if item.itemtype == "kit" || item.itemtype == "Kit">
+                                <td colspan="1" style="align: left; ">${item.itemtype}<br/><br/></td>
+                            <#else>
+                                <td colspan="1" style="align: left; ">${item.units}<br/><br/></td>
+                            </#if>
                             <td colspan="1" style="align: left; ">${units_sat}<br/><br/></td>
                             <td colspan="6" style="align: left;">${item.description}<br/><br/></td>
 
@@ -1679,14 +1716,16 @@
                                 </tr>
                             </#if>
 
-                            <#assign envio = record.shippingcost?number>
-                            <#if envio != 0>
-                                <tr>
-                                <td style="align: right; width: 180px;">
-                                    <strong>ENVÍO: &nbsp; &nbsp;</strong>
-                                </td>
-                                <td style="align: right; width: 90px; border-bottom:1.5px single silver;">${record.shippingcost}</td>
-                                </tr>
+                            <#if record.shippingcost?has_content || record.shippingcost != "0" || record.shippingcost != "" >
+                                <#assign envio = record.shippingcost?string.computer>
+                                <#if envio?number != 0>
+                                    <tr>
+                                    <td style="align: right; width: 180px;">
+                                        <strong>ENVÍO: &nbsp; &nbsp;</strong>
+                                    </td>
+                                    <td style="align: right; width: 90px; border-bottom:1.5px single silver;">${record.shippingcost}</td>
+                                    </tr>
+                                </#if>
                             </#if>
 
                             <tr>
