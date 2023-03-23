@@ -510,14 +510,7 @@
                                             </#if>
                                                 <td colspan="3" style="align: left; ">${item.item}<br/><br/></td>
                                                 <#assign cantidad = Conceptos[contador].atributos.Cantidad?number>
-                                                <#assign decimales = cantidad?keep_after(".")?number>
-                                                <#if (cantidad gt 0 && cantidad lt 999) && (decimales gt 0)>
-                                                    <td colspan="3" style="align: center; font-size: 6pt;">${cantidad}<br/><br/></td>
-                                                <#elseif cantidad gt 999 && decimales gt 0>
-                                                    <td colspan="3" style="align: center; font-size: 6pt;">${cantidad}<br/><br/></td>
-                                                <#else>
-                                                    <td colspan="3" style="align: center; font-size: 7pt;">${cantidad?string[",##0"]}<br/><br/></td>
-                                                </#if>
+                                                <td colspan="3" style="align: center; font-size: 6pt;">${cantidad?string[",##0"]} <br/><br/></td>
                                                 <#if item.itemtype == "kit" || item.itemtype == "Kit">
                                                     <td colspan="2" style="align: left; ">${item.itemtype}<br/><br/></td>
                                                 <#else>
@@ -622,14 +615,7 @@
                                     <td colspan="4" style="align: center; font-size:8px">${dataXML.Complemento.ComercioExterior.Mercancias.Mercancia.atributos.FraccionArancelaria}<br/><br/></td>
                                     <td colspan="3" style="align: left; ">${item.item}<br/><br/></td>
                                     <#assign cantidad = dataXML.Conceptos.Concepto.atributos.Cantidad?number>
-                                    <#assign decimales = cantidad?keep_after(".")?number>
-                                    <#if (cantidad gt 0 && cantidad lt 999) && (decimales gt 0)>
-                                        <td colspan="3" style="align: center; font-size: 6pt;">${cantidad}<br/><br/></td>
-                                    <#elseif cantidad gt 999 && decimales gt 0>
-                                        <td colspan="3" style="align: center; font-size: 6pt;">${cantidad}<br/><br/></td>
-                                    <#else>
-                                        <td colspan="3" style="align: center; font-size: 7pt;">${cantidad?string[",##0"]}<br/><br/></td>
-                                    </#if>
+                                    <td colspan="3" style="align: center; font-size: 6pt;">${cantidad?string[",##0"]}<br/><br/></td>
                                     <#if item.itemtype == "kit" || item.itemtype == "Kit">
                                         <td colspan="2" style="align: left; ">${item.itemtype}<br/><br/></td>
                                     <#else>
@@ -870,54 +856,27 @@
                             </tr>
                             <#if item.units == "ANT">
                                 <#assign units_sat = "ACT">
-                                <#else>
-                                <#assign units_sat = "">
-                            </#if>
-                            <#if item.units == "SRV">
+                            <#elseif item.units == "SRV" || item.units == "Serv">
                                 <#assign units_sat = "E48">
-                                <#else>
-                                <#assign units_sat = "">
-                            </#if>
-                            <#if item.units == "GR">
+                            <#elseif item.units == "GR">
                                 <#assign units_sat = "GRM">
-                                <#else>
-                                <#assign units_sat = "">
-                            </#if>
-                            <#if item.units == "KG" || item.units == "Kg" || item.units == "kg" || item.units == "kilo" || item.units == "Kilo" >
+                            <#elseif item.units == "KG" || item.units == "Kg" || item.units == "kg" || item.units == "kilo" || item.units == "Kilo" >
                                 <#assign units_sat = "KGM">
-                                <#else>
-                                <#assign units_sat = "">
-                            </#if>
-                            <#if item.units == "ML">
+                            <#elseif item.units == "ML">
                                 <#assign units_sat = "MLT">
-                                <#else>
-                                <#assign units_sat = "">
-                            </#if>
-                            <#if item.units == "L">
+                            <#elseif item.units == "L">
                                 <#assign units_sat = "LTR">
-                                <#else>
-                                <#assign units_sat = "">
-                            </#if>
-                            <#if item.itemtype == "kit" || item.itemtype == "Kit" || item.itemtype == "KIT">
-                                <#assign units_sat = "KT">
-                            </#if>
-                            <#if item.units == "PZA" || item.units == "Pza">
+                            <#elseif item.units == "PZA" || item.units == "Pza">
                                 <#assign units_sat = "H87">
-                                <#else>
-                                <#assign units_sat = "">
+                            <#elseif item.itemtype == "kit" || item.itemtype == "Kit">
+                                <#assign units_sat = "KT">
+                            <#else>
+                                <#assign units_sat = item.units>
                             </#if>
                             <tr>
                             <td colspan="2" style="align: center;">${item.custcol_mx_txn_line_sat_item_code?keep_before(" ")}<br/><br/></td>
                             <td colspan="4" style="align: left;">${item.item}<br/><br/></td>
-                            <#assign cantidad = item.quantity?number>
-                            <#assign decimales = cantidad?keep_after(".")?number>
-                            <#if (cantidad gt 0 && cantidad lt 999) && (decimales gt 0)>
-                                <td colspan="1" style="align: center; font-size: 6pt;">${cantidad}<br/><br/></td>
-                            <#elseif cantidad gt 999 && decimales gt 0>
-                                <td colspan="1" style="align: center; font-size: 6pt;">${cantidad}<br/><br/></td>
-                            <#else>
-                                <td colspan="1" style="align: center; font-size: 7pt;">${cantidad?string[",##0"]}<br/><br/></td>
-                            </#if>
+                            <td colspan="1" style="align: center; font-size: 6pt;">${item.quantity?string[",##0"]}<br/><br/></td>
                             <#if item.itemtype == "kit" || item.itemtype == "Kit" || item.itemtype == "KIT">
                                 <td colspan="1" style="align: left; ">${item.itemtype}<br/><br/></td>
                             <#else>
@@ -1282,55 +1241,29 @@
                             </tr>
                             <#if item.units == "ANT">
                                 <#assign units_sat = "ACT">
-                                <#else>
-                                <#assign units_sat = item.units>
-                            </#if>
-                            <#if item.units == "SRV">
+                            <#elseif item.units == "SRV" || item.units == "Serv">
                                 <#assign units_sat = "E48">
-                                <#else>
-                                <#assign units_sat = item.units>
-                            </#if>
-                            <#if item.units == "GR">
+                            <#elseif item.units == "GR">
                                 <#assign units_sat = "GRM">
-                                <#else>
-                                <#assign units_sat = item.units>
-                            </#if>
-                            <#if item.units == "KG" || item.units == "Kg" || item.units == "kg" || item.units == "kilo" || item.units == "Kilo">
-                                <#assign units_sat = "58">
-                                <#else>
-                                <#assign units_sat = "">
-                            </#if>
-                            <#if item.units == "ML">
+                            <#elseif item.units == "KG" || item.units == "Kg" || item.units == "kg" || item.units == "kilo" || item.units == "Kilo" >
+                                <#assign units_sat = "KGM">
+                            <#elseif item.units == "ML">
                                 <#assign units_sat = "MLT">
-                                <#else>
-                                <#assign units_sat = item.units>
-                            </#if>
-                            <#if item.units == "L">
+                            <#elseif item.units == "L">
                                 <#assign units_sat = "LTR">
-                                <#else>
-                                <#assign units_sat = item.units>
-                            </#if>
-                            <#if item.units == "PZA" || item.units == "Pza">
+                            <#elseif item.units == "PZA" || item.units == "Pza">
                                 <#assign units_sat = "H87">
-                                <#else>
-                                <#assign units_sat = item.units>
-                            </#if>
-                            <#if item.itemtype == "kit" || item.itemtype == "Kit">
+                            <#elseif item.itemtype == "kit" || item.itemtype == "Kit">
                                 <#assign units_sat = "KT">
+                            <#else>
+                                <#assign units_sat = item.units>
                             </#if>
                             <tr>
                                 <td colspan="4" style="align: center; ">${item.custcol_mx_txn_line_sat_item_code?keep_before(" ")}<br/><br/></td>
                                 <td colspan="4" style="align: center; font-size:8px">${item.custcol_efx_fe_ce_farancel_code}<br/><br/></td>
                                 <td colspan="3" style="align: left; ">${item.item}<br/><br/></td>
                                 <#assign cantidad = item.quantity>
-                                <#assign decimales = cantidad?keep_after(".")?number>
-                                <#if (cantidad gt 0 && cantidad lt 999) && (decimales gt 0)>
-                                    <td colspan="3" style="align: center; font-size: 6pt;">${cantidad}<br/><br/></td>
-                                <#elseif cantidad gt 999 && decimales gt 0>
-                                    <td colspan="3" style="align: center; font-size: 6pt;">${cantidad}<br/><br/></td>
-                                <#else>
-                                    <td colspan="3" style="align: center; font-size: 7pt;">${cantidad?string[",##0"]}<br/><br/></td>
-                                </#if>
+                                <td colspan="3" style="align: center; font-size: 6pt;">${cantidad?string[",##0"]}<br/><br/></td>
                                 <#if item.itemtype == "kit" || item.itemtype == "Kit">
                                     <td colspan="2" style="align: left; ">${item.itemtype}<br/><br/></td>
                                 <#else>
@@ -1553,54 +1486,29 @@
                             </tr>
                             <#if item.units == "ANT">
                                 <#assign units_sat = "ACT">
-                                <#else>
-                                <#assign units_sat = "">
-                            </#if>
-                            <#if item.units == "SRV">
+                            <#elseif item.units == "SRV" || item.units == "Serv">
                                 <#assign units_sat = "E48">
-                                <#else>
-                                <#assign units_sat = "">
-                            </#if>
-                            <#if item.units == "GR">
+                            <#elseif item.units == "GR">
                                 <#assign units_sat = "GRM">
-                                <#else>
-                                <#assign units_sat = "">
-                            </#if>
-                            <#if item.units == "KG" || item.units == "Kg" || item.units == "kg" || item.units == "kilo" || item.units == "Kilo" >
+                            <#elseif item.units == "KG" || item.units == "Kg" || item.units == "kg" || item.units == "kilo" || item.units == "Kilo" >
                                 <#assign units_sat = "KGM">
-                                <#else>
-                                <#assign units_sat = "">
-                            </#if>
-                            <#if item.units == "ML">
+                            <#elseif item.units == "ML">
                                 <#assign units_sat = "MLT">
-                                <#else>
-                                <#assign units_sat = "">
-                            </#if>
-                            <#if item.units == "L">
+                            <#elseif item.units == "L">
                                 <#assign units_sat = "LTR">
-                                <#else>
-                                <#assign units_sat = "">
-                            </#if>
-                            <#if item.units == "PZA" || item.units == "Pza">
+                            <#elseif item.units == "PZA" || item.units == "Pza">
                                 <#assign units_sat = "H87">
-                                <#else>
-                                <#assign units_sat = "">
-                            </#if>
-                            <#if item.itemtype == "kit" || item.itemtype == "Kit">
+                            <#elseif item.itemtype == "kit" || item.itemtype == "Kit">
                                 <#assign units_sat = "KT">
+                            <#else>
+                                <#assign units_sat = item.units>
                             </#if>
+
                             <tr>
                             <td colspan="2" style="align: center;">${item.custcol_mx_txn_line_sat_item_code?keep_before(" ")}<br/><br/></td>
                             <td colspan="4" style="align: left;">${item.item}<br/><br/></td>
                             <#assign cantidad = item.quantity>
-                            <#assign decimales = cantidad?keep_after(".")?number>
-                            <#if (cantidad gt 0 && cantidad lt 999) && (decimales gt 0)>
-                                <td colspan="1" style="align: center; font-size: 6pt;">${cantidad}<br/><br/></td>
-                            <#elseif cantidad gt 999 && decimales gt 0>
-                                <td colspan="1" style="align: center; font-size: 6pt;">${cantidad}<br/><br/></td>
-                            <#else>
-                                <td colspan="1" style="align: center; font-size: 7pt;">${cantidad?string[",##0"]}<br/><br/></td>
-                            </#if>
+                            <td colspan="1" style="align: center; font-size: 6pt;">${cantidad?string[",##0"]}<br/><br/></td>
                             <#if item.itemtype == "kit" || item.itemtype == "Kit">
                                 <td colspan="1" style="align: left; ">${item.itemtype}<br/><br/></td>
                             <#else>
