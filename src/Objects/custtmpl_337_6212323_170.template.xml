@@ -964,14 +964,14 @@
                                 </tr>
                             </#list>
                             </#if>
-                            <#if version_fe == "4.0">
+                            <#--  <#if version_fe == "4.0">
                                 <tr style="padding:5px 0px;" align="center">
-                                    <td colspan="6"
+                                    <td colspan="21"
                                         style="font-size: 4pt; padding-top: 1px;  padding-bottom: 1px; "><b>Objeto de impuesto:</b>
                                     </td>
-                                    <td colspan="13" style="font-size: 4pt; padding-top: 1px;  padding-bottom: 1px;">${item.custcol_mx_txn_line_sat_tax_object}</td>
+                                    <td colspan="21" style="font-size: 4pt; padding-top: 1px;  padding-bottom: 1px;">${item.custcol_mx_txn_line_sat_tax_object}</td>
                                 </tr>
-                            </#if>
+                            </#if>  -->
                         </#list>
                         <tr>
                             <td colspan="21"><strong>Notas:</strong><br/>${record.memo}</td>
@@ -1353,34 +1353,34 @@
                             </tr>
                             <#if item.inventorydetail?has_content>
                                 <tr>
-                                    <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4"><strong>Número Serial</strong></td>
-                                    <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4"><strong>Número de Motor</strong></td>
-                                    <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4"><strong>Pedimento</strong></td>
-                                    <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4"><strong>Fecha Entrada</strong></td>
-                                    <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;" colspan="4"><strong>Repuve</strong></td>
+                                    <td colspan="12" style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;"><strong>Número Serial</strong></td>
+                                    <td colspan="7" style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;"><strong>Número de Motor</strong></td>
+                                    <td colspan="7" style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;"><strong>Pedimento</strong></td>
+                                    <td colspan="7" style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;"><strong>Fecha Entrada</strong></td>
+                                    <td colspan="7" style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;"><strong>Repuve</strong></td>
                                 </tr>
                                 <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
                                 <#assign "detalle_inventario" = detalle_inventario_json?eval>
                                 <#list detalle_inventario as detalle_inv>
                                     <tr>
-                                        <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">${detalle_inv.inventorynumber}	         </td>
-                                        <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">${detalle_inv.num_motor}</td>
+                                        <td colspan="12" style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" >${detalle_inv.inventorynumber}	         </td>
+                                        <td colspan="7" style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" >${detalle_inv.num_motor}</td>
                                         <#if detalle_inv.inventorynumber?starts_with("3MU")>
-                                            <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">ENSAMBLE EN MEXICO</td>
+                                            <td colspan="7" style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" >ENSAMBLE EN MEXICO</td>
                                         <#else>
-                                            <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">${detalle_inv.num_pedimento}</td>
+                                            <td colspan="7" style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" >${detalle_inv.num_pedimento}</td>
                                         </#if>
-                                        <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">${detalle_inv.fecha_entrada_pedimento}</td>
-                                        <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;" colspan="4">${detalle_inv.repuve}</td>
+                                        <td colspan="7" style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" >${detalle_inv.fecha_entrada_pedimento}</td>
+                                        <td colspan="7" style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;" >${detalle_inv.repuve}</td>
                                     </tr>
                                 </#list>
                             </#if>
+                            <#--  modificar colspans  -->
                             <#if version_fe == "4.0">
                                 <tr style="padding:5px 0px;" align="center">
-                                    <td colspan="6"
-                                        style="font-size: 4pt; padding-top: 1px;  padding-bottom: 1px;"><b>Objeto de impuesto:</b>
+                                    <td colspan="6" style="font-size: 4pt; padding-top: 1px;  padding-bottom: 1px;"><b>Objeto de impuesto:</b>
                                     </td>
-                                    <td colspan="39" style="font-size: 4pt; padding-top: 1px;  padding-bottom: 1px;">${item.custcol_mx_txn_line_sat_tax_object}</td>
+                                    <td colspan="33" style="font-size: 4pt; padding-top: 1px;  padding-bottom: 1px;">${item.custcol_mx_txn_line_sat_tax_object}</td>
                                 </tr>
                             </#if>
                         </#list>
@@ -1604,28 +1604,28 @@
                             <td colspan="2" style="align: center; ">${item.grossamt}<br/><br/></td>
                             </tr>
                             <#if item.inventorydetail?has_content>
-                            <tr>
-                                <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="5"><strong>Número Serial</strong></td>
-                                <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4"><strong>Número de Motor</strong></td>
-                                <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4"><strong>Pedimento</strong></td>
-                                <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4"><strong>Fecha Entrada</strong></td>
-                                <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;" colspan="4"><strong>Repuve</strong></td>
-                            </tr>
-                            <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
-                            <#assign "detalle_inventario" = detalle_inventario_json?eval>
-                            <#list detalle_inventario as detalle_inv>
                                 <tr>
-                                <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="5">${detalle_inv.inventorynumber}	         </td>
-                                <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">${detalle_inv.num_motor}</td>
-                                <#if detalle_inv.inventorynumber?starts_with("3MU")>
-                                    <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">ENSAMBLE EN MEXICO</td>
-                                <#else>
-                                    <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">${detalle_inv.num_pedimento}</td>
-                                </#if>
-                                <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">${detalle_inv.fecha_entrada_pedimento}</td>
-                                <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;" colspan="4">${detalle_inv.repuve}</td>
+                                    <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="5"><strong>Número Serial</strong></td>
+                                    <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4"><strong>Número de Motor</strong></td>
+                                    <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4"><strong>Pedimento</strong></td>
+                                    <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4"><strong>Fecha Entrada</strong></td>
+                                    <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;" colspan="4"><strong>Repuve</strong></td>
                                 </tr>
-                            </#list>
+                                <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
+                                <#assign "detalle_inventario" = detalle_inventario_json?eval>
+                                <#list detalle_inventario as detalle_inv>
+                                    <tr>
+                                    <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="5">${detalle_inv.inventorynumber}	         </td>
+                                    <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">${detalle_inv.num_motor}</td>
+                                    <#if detalle_inv.inventorynumber?starts_with("3MU")>
+                                        <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">ENSAMBLE EN MEXICO</td>
+                                    <#else>
+                                        <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">${detalle_inv.num_pedimento}</td>
+                                    </#if>
+                                    <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">${detalle_inv.fecha_entrada_pedimento}</td>
+                                    <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;" colspan="4">${detalle_inv.repuve}</td>
+                                    </tr>
+                                </#list>
                             </#if>
                             <#if version_fe == "4.0">
                                 <tr style="padding:5px 0px;" align="center">
