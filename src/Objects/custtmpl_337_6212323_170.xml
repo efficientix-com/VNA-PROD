@@ -1,0 +1,9 @@
+<advancedpdftemplate scriptid="custtmpl_337_6212323_170" standard="STDTMPLEMPTY">
+  <description></description>
+  <displaysourcecode>T</displaysourcecode>
+  <isinactive>F</isinactive>
+  <preferred>F</preferred>
+  <printtype>TRANSACTION</printtype>
+  <title>VNA | Mexico Certified Invoice PDF okv3</title>
+  <trantype>CUSTINVC</trantype>
+</advancedpdftemplate>
