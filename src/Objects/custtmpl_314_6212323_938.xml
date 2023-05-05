@@ -1,0 +1,9 @@
+<advancedpdftemplate scriptid="custtmpl_314_6212323_938" standard="STDTMPLEMPTY">
+  <description></description>
+  <displaysourcecode>T</displaysourcecode>
+  <isinactive>F</isinactive>
+  <preferred>F</preferred>
+  <printtype>TRANSACTION</printtype>
+  <title>VNA | Mexico Certified Credit Memo PDF ok</title>
+  <trantype>CUSTCRED</trantype>
+</advancedpdftemplate>
