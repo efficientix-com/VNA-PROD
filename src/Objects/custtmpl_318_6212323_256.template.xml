@@ -1,0 +1,457 @@
+<?xml version="1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+<#setting locale=custom.locale>
+<#assign labels = custom.labels>
+<#if custom.certData?has_content>
+ <#assign "certData" = custom.certData>
+<#else>
+ <#assign "certData" = record>
+</#if>
+<#assign "satCodes" = custom.satcodes>
+
+<#if custom.multiCurrencyFeature == "true">
+<#assign "currencyCode" = record.currencysymbol>
+<#assign exchangeRate = record.exchangerate?string.number>
+<#else>
+<#assign "currencyCode" = "MXN">
+<#assign exchangeRate = 1>
+</#if>
+<#if custom.oneWorldFeature == "true">
+<#assign customCompanyInfo = record.subsidiary>
+<#else>
+<#assign "customCompanyInfo" = companyinformation>
+</#if>
+<#if customer.isperson == "T">
+<#assign customerName = customer.firstname + ' ' + customer.lastname>
+<#else>
+<#assign "customerName" = customer.companyname>
+</#if>
+<#assign "summary" = custom.summary>
+<#assign "totalAmount" = summary.subtotal - summary.totalDiscount>
+<#assign "companyTaxRegNumber" = custom.companyInfo.rfc>
+<#assign currencySymbolMap = {"USD":"$","CAD":"$","EUR":"€","AED":"د.إ.‏","AFN":"؋","ALL":"Lek","AMD":"դր.","ARS":"$","AUD":"$","AZN":"ман.","BAM":"KM","BDT":"৳","BGN":"лв.","BHD":"د.ب.‏","BIF":"FBu","BND":"$","BOB":"Bs","BRL":"R$","BWP":"P","BYR":"BYR","BZD":"$","CDF":"FrCD","CHF":"CHF","CLP":"$","CNY":"CN¥","COP":"$","CRC":"₡","CVE":"CV$","CZK":"Kč","DJF":"Fdj","DKK":"kr","DOP":"RD$","DZD":"د.ج.‏","EEK":"kr","EGP":"ج.م.‏","ERN":"Nfk","ETB":"Br","GBP":"£","GEL":"GEL","GHS":"GH₵","GNF":"FG","GTQ":"Q","HKD":"$","HNL":"L","HRK":"kn","HUF":"Ft","IDR":"Rp","ILS":"₪","INR":"টকা","IQD":"د.ع.‏","IRR":"﷼","ISK":"kr","JMD":"$","JOD":"د.أ.‏","JPY":"￥","KES":"Ksh","KHR":"៛","KMF":"FC","KRW":"₩","KWD":"د.ك.‏","KZT":"тңг.","LBP":"ل.ل.‏","LKR":"SL Re","LTL":"Lt","LVL":"Ls","LYD":"د.ل.‏","MAD":"د.م.‏","MDL":"MDL","MGA":"MGA","MKD":"MKD","MMK":"K","MOP":"MOP$","MUR":"MURs","MXN":"$","MYR":"RM","MZN":"MTn","NAD":"N$","NGN":"₦","NIO":"C$","NOK":"kr","NPR":"नेरू","NZD":"$","OMR":"ر.ع.‏","PAB":"B/.","PEN":"S/.","PHP":"₱","PKR":"₨","PLN":"zł","PYG":"₲","QAR":"ر.ق.‏","RON":"RON","RSD":"дин.","RUB":"руб.","RWF":"FR","SAR":"ر.س.‏","SDG":"SDG","SEK":"kr","SGD":"$","SOS":"Ssh","SYP":"ل.س.‏","THB":"฿","TND":"د.ت.‏","TOP":"T$","TRY":"TL","TTD":"$","TWD":"NT$","TZS":"TSh","UAH":"₴","UGX":"USh","UYU":"$","UZS":"UZS","VEF":"Bs.F.","VND":"₫","XAF":"FCFA","XOF":"CFA","YER":"ر.ي.‏","ZAR":"R","ZMK":"ZK"}>
+<#function fmtc value>
+<#assign dst =  currencySymbolMap[currencyCode] + value?number?string["0.00"]>
+<#return dst>
+</#function>
+
+<head>
+    <#setting locale="en_US">
+    <link name="NotoSans" type="font" subtype="truetype" src="${nsfont.NotoSans_Regular}" src-bold="${nsfont.NotoSans_Bold}" src-italic="${nsfont.NotoSans_Italic}" src-bolditalic="${nsfont.NotoSans_BoldItalic}" bytes="2" />
+    <#if .locale == "zh_CN">
+    <link name="NotoSansCJKsc" type="font" subtype="opentype" src="${nsfont.NotoSansCJKsc_Regular}" src-bold="${nsfont.NotoSansCJKsc_Bold}" bytes="2" />
+    <#elseif .locale == "zh_TW">
+    <link name="NotoSansCJKtc" type="font" subtype="opentype" src="${nsfont.NotoSansCJKtc_Regular}" src-bold="${nsfont.NotoSansCJKtc_Bold}" bytes="2" />
+    <#elseif .locale == "ja_JP">
+    <link name="NotoSansCJKjp" type="font" subtype="opentype" src="${nsfont.NotoSansCJKjp_Regular}" src-bold="${nsfont.NotoSansCJKjp_Bold}" bytes="2" />
+    <#elseif .locale == "ko_KR">
+    <link name="NotoSansCJKkr" type="font" subtype="opentype" src="${nsfont.NotoSansCJKkr_Regular}" src-bold="${nsfont.NotoSansCJKkr_Bold}" bytes="2" />
+    <#elseif .locale == "th_TH">
+    <link name="NotoSansThai" type="font" subtype="opentype" src="${nsfont.NotoSansThai_Regular}" src-bold="${nsfont.NotoSansThai_Bold}" bytes="2" />
+</#if>
+
+<style type="text/css">* {
+    <#if .locale == "zh_CN">
+    font-family: NotoSans, NotoSansCJKsc, sans-serif;
+    <#elseif .locale == "zh_TW">
+    font-family: NotoSans, NotoSansCJKtc, sans-serif;
+    <#elseif .locale == "ja_JP">
+    font-family: NotoSans, NotoSansCJKjp, sans-serif;
+    <#elseif .locale == "ko_KR">
+    font-family: NotoSans, NotoSansCJKkr, sans-serif;
+    <#elseif .locale == "th_TH">
+    font-family: NotoSans, NotoSansThai, sans-serif;
+    <#else>
+    font-family: NotoSans, sans-serif;
+    </#if>
+}
+body {
+  font-family: Verdana, Helvetica, sans-serif;
+  }  
+table {
+    font-size: 9px;
+    table-layout: fixed;
+}
+th {
+    font-weight: bold;
+    font-size: 8px;
+    vertical-align: middle;
+    padding: 5px 6px 3px;
+    background-color: #e3e3e3;
+    color: #161616;
+}
+td {
+    padding: 4px 6px;
+}
+td p { align:left }
+b {
+    font-weight: bold;
+    color: #000000;
+}
+table.header td {
+    padding: 0px;
+    font-size: 8px;
+}
+table.footer td {
+    padding: 0px;
+    font-size: 8pt;
+}
+table.itemtable th {
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+table.desglose td {
+    font-size: 6px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+table.body td {
+    padding-top: 2px;
+}
+table.total {
+    page-break-inside: avoid;
+}
+tr.totalrow {
+    background-color: #e3e3e3;
+    line-height: 200%;
+}
+td.totalboxtop {
+    font-size: 9px;
+    background-color: #e3e3e3;
+}
+td.addressheader {
+    font-size: 8px;
+    padding-top: 6px;
+    padding-bottom: 2px;
+}
+td.subtotal{
+    text-align: right;
+}
+td.address {
+    padding-top: 0px;
+}
+td.totalboxmid {
+    font-size: 9px;
+    padding-top: 20px;
+    background-color: #e3e3e3;
+}
+td.totalboxbot {
+    background-color: #e3e3e3;
+    font-weight: bold;
+}
+span {
+    font-size: 9px;
+}
+span.title {
+    font-size: 9px;
+}
+span.number {
+    font-size: 9px;
+}
+span.itemname {
+    font-weight: bold;
+    line-height: 150%;
+}
+hr {
+    width: 100%;
+    color: #ffffff;
+    background-color: #e3e3e3;
+    height: 1px;
+}
+</style>
+</head>
+<body footer="nlfooter" footer-height="11px" padding="0.5in 0.5in 0.5in 0.5in" size="Letter">
+  
+
+  
+<table style="width: 100%; border-spacing: 0; table-layout: fixed; word-break:break-all;" cellspacing="0" cellpadding="0" > 
+    <tbody> 
+      <tr>  											
+        <td style="width: 25%;" rowspan="6">&nbsp;</td> 
+        <td style="width: 25%; align: left; vertical-align: top; font-weight:bold;" rowspan="6" font-size="8.5px"> 
+          <span>  ${customCompanyInfo.legalname}</span><br /> 
+          <span>  ${companyInformation.addressText}  </span><br /> 
+          <span>RFC: ${companyTaxRegNumber}</span><br /> 
+          <span>Régimen Fiscal: ${satCodes.industryTypeName?keep_before(" ")}</span><br /> 
+        </td> 
+        
+      <td colspan="4" style="font-size: 10px; width: 40%;" align="right">
+      <table style="font-weight:bold; height:70.8pt; table-layout: fixed; word-break:break-all;" border="1" font-size="8.5px" >  
+        <tbody> 
+          <tr>
+            <td style="width: 82pt; align: right;">PAGO</td>
+            <td style="width: 2pt;">:</td> 
+            <td style="width: 85pt;">&nbsp;${record.tranid}  </td> 
+          </tr> 
+          <tr>  
+            <td style="width: 78pt; align: right;">Folio Fiscal</td> 
+            <td style="width: 2pt;">:</td> 
+            <td style="width: 85pt;">&nbsp;${certData.custbody_mx_cfdi_uuid}</td> 
+          </tr> 
+          <tr>  
+            <td style="width: 82pt; align: right;">No. Certificado SAT</td> 
+            <td style="width: 2pt;">:</td> 
+            <td style="width: 85pt;">&nbsp;${certData.custbody_mx_cfdi_sat_serial}</td> 
+          </tr> 
+          <tr>  
+            <td style="width: 82pt; align: right;">No. Certificado</td> 
+            <td style="width: 2pt;">:</td> 
+            <td style="width: 85pt;">&nbsp;${certData.custbody_mx_cfdi_issuer_serial}</td> 
+          </tr> 
+          <tr>  
+            <td style="width: 90pt; align: right;">Fecha de Expedición</td> 
+            <td style="width: 2pt;">:</td> 
+            <td style="width: 85pt;">&nbsp;${record.trandate?string.iso_nz}T00:00:00</td> 
+          </tr> 
+          <tr>  
+            <td style="width: 100pt; align: right;">Fecha de Certificación</td> 
+            <td style="width: 2pt;">:</td> 
+            <td style="width: 85pt;">&nbsp;${certData.custbody_mx_cfdi_certify_timestamp}</td> 
+          </tr> 
+          <tr>   
+            <td style="width: 87pt; align: right;">Expedida en</td> 
+            <td style="width: 2pt;">:</td> 
+            <td style="width: 85pt;">${customCompanyInfo.city} </td> 
+          </tr> 
+        </tbody>  
+      </table>       
+    </td>
+    </tr> 
+  </tbody> 
+  </table> 
+        
+  <table style="width: 100%; border-left:0.5px single black; border-right:0.5px single black; border-top:0.5px single black; border-bottom:0.5px single black;   margin-top: 15px;"> 
+    <tbody> 
+      <tr> 
+        <td style="align: center; border-bottom:0.5px single black; border-right:0.5px single black; width: 50%;" colspan="4"> 
+          <strong>&nbsp;VENDIDO A/SOLD TO</strong> 
+        </td> 
+        <td style="align: center; border-bottom:0.5px single black; width: 50%;" > 
+          <strong>&nbsp;EMBARCADO A/SHIP TO</strong> 
+        </td> 
+      </tr> 
+      <tr> 
+        <td style="align: right;  width: 15%;"><b>Nombre</b>:</td> 
+        <td style="border-right:0.5px single black; width: 35%;" colspan="3">${record.customer.companyname}  </td>    			
+        <td style="vertical-align: top; width: 50%;" rowspan="3"> ${record.customer.shipaddress}  </td> 	 			
+      </tr>  
+      <tr> 
+        <td style="align: right; width: 15%;"><b>Bill Address</b>:</td> 
+        <td style="border-right:0.5px single black;  width: 35%;" colspan="3">${record.customer.billaddress}  </td>    							
+      </tr> 	
+      <tr> 
+        <td style="align: right;  width: 15%;"><b>RFC</b>:</td>   
+        <td style="border-right:0.5px single black; width: 35%;" colspan="3">${record.custbody_mx_customer_rfc}  </td>  
+      </tr> 
+      <tr> 
+        <td style="align: right;  width: 15%;"><b>Uso CFDI</b>:</td>
+        <td style="border-right:0.5px single black; width: 35%;" colspan="3">${certData.custbody_mx_cfdi_usage}  </td>  
+      </tr>
+
+    </tbody> 
+  </table>
+
+<table style="width: 100%; border-left:0.5px single black; border-right:0.5px single black;  border-top:0.5px single black;  table-layout: fixed; word-break: break-all; border-collapse: collapse; margin-top: 15px;">  
+  <tbody> 
+    <tr> 
+      <td style="align: center; width: 560pt; background-color: #343434; color:white;"><strong>PAGO 1</strong></td> 
+    </tr> 
+  </tbody> 
+  </table> 
+  
+  <table style="width: 100%; border-left:0.5px single black; border-right:0.5px single black; border-bottom:0.5px single black;  border-top:0.5px single black;  table-layout: fixed; word-break: break-all; border-collapse: collapse;">   
+		<tbody> 
+			<tr> 
+				<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;"><strong>Fecha de Pago</strong></td> 
+				<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;">  ${record.trandate}  </td> 
+				<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;"><strong>Forma de Pago</strong></td> 
+				<td style="align: left; width: 150pt; border-bottom:0.5px single black;">  ${record.custbody_mx_txn_sat_payment_method}  </td> 
+			</tr> 
+			<tr> 
+				<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;"><strong>Moneda</strong></td> 
+				<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;">  ${record.currency}  </td> 
+				<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;"><strong>Tipo de Cambio</strong></td> 
+				<td style="align: left; width: 150pt; border-bottom:0.5px single black;">  ${record.exchangerate}  </td> 
+			</tr> 
+			<tr> 
+				<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;"><strong>Monto</strong><br/></td> 
+				<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;">  ${record.payment}  </td> 
+				<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;"><strong>Rfc Emisor Cta. Ben.</strong></td> 
+				<td style="align: left; width: 150pt; border-bottom:0.5px single black;">  ${record.custbody_mx_cfdi_issuer_entity_rfc}  </td> 
+			</tr> 
+			<tr> 
+				<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;"><strong>Rfc Emisor Cta. Ord.</strong></td> 
+				<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;">  ${record.custbody_mx_cfdi_recipient_entity_rfc}  </td> 
+				<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;"><strong>Nombre Banco Ordenante</strong></td> 
+				<td style="align: left; width: 150pt; border-bottom:0.5px single black;">  ${record.custbody_mx_cfdi_issue_bank_name}  </td> 
+			</tr> 
+			<tr> 
+				<td style="align: left; width: 150pt; border-right:0.5px single black;"><strong>Cta. Ordenante</strong></td> 
+				<td style="align: left; width: 150pt; border-right:0.5px single black;">  ${record.custbody_mx_cfdi_payer_account}  </td> 
+				<td style="align: left; width: 150pt; border-right:0.5px single black;"><strong>Cta. Beneficiario</strong></td> 
+				<td style="align: left; width: 150pt;">  ${record.custbody_mx_cfdi_recipient_account}  </td> 
+			</tr> 
+		</tbody> 
+	</table>
+
+
+<#list record.apply as appliedTxn>
+  <#if appliedTxn.apply == true><!-- start items -->
+          
+<table style="width: 100%; border-left:0.5px single black; border-right:0.5px single black;  border-top:0.5px single black;  table-layout: fixed; word-break: break-all; border-collapse: collapse;  margin-top: 15px;">  
+			<tbody> 
+				<tr> 
+					<td style="align: center; width: 100%; background-color: #343434; color:white;"><strong>DOCUMENTO RELACIONADO   ${appliedTxn_index+1}   </strong></td> 
+				</tr> 
+			</tbody> 
+		</table> 
+		<table style="width: 100%; border-left:0.5px single black; border-right:0.5px single black; border-bottom:0.5px single black;  border-top:0.5px single black;  table-layout: fixed; word-break: break-all; border-collapse: collapse;">   
+			<tbody>    
+				<tr> 
+					<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;"><strong>Id Documento</strong></td> 
+					<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;">${certData.appliedtotransaction}  </td> 
+					<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;"><strong>Serie</strong></td> 
+					<td style="align: left; width: 150pt; border-bottom:0.5px single black;">${subsidiary.tranprefix}</td> 
+				</tr> 
+				<tr> 
+					<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;"><strong>Folio</strong></td> 
+					<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;">  ${appliedTxn.refnum}  </td> 
+					<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;"><strong>Moneda</strong></td> 
+					<td style="align: left; width: 150pt; border-bottom:0.5px single black;">  ${appliedTxn.currency}  </td> 
+				</tr> 
+				<tr> 
+					<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;"><strong>Metodo de Pago</strong></td> 
+					<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;">  PPD - Pago en Parcialidades o Diferido  </td> 
+					<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;"><strong>Num. Parcialidad</strong></td> 
+					<td style="align: left; width: 150pt; border-bottom:0.5px single black;">  ${record.custbody_bit_pago_numparcialidad}  </td> 
+				</tr> 
+				<tr> 
+					<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;"><strong>Imp. Saldo Ant.</strong></td> 
+					<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;">${appliedTxn.due}    </td> 
+					<td style="align: left; width: 150pt; border-bottom:0.5px single black; border-right:0.5px single black;"><strong>Imp. Pagado</strong></td> 
+					<td style="align: left; width: 150pt; border-bottom:0.5px single black;">  ${appliedTxn.amount}  </td> 
+				</tr> 
+				<tr> 
+                  <#assign saldoInsoluto = appliedTxn.due - appliedTxn.amount>
+					<td style="align: left; width: 150pt; border-right:0.5px single black;"><strong>Imp. Saldo Insoluto</strong></td> 
+					<td style="align: left; width: 150pt; border-right:0.5px single black;"> $${saldoInsoluto?number?string[",##0.00"]}  </td> 
+					<td style="align: left; width: 150pt; border-right:0.5px single black;"></td> 
+					<td style="align: left; width: 150pt;"></td> 
+				</tr> 
+			</tbody> 
+		</table> 
+    </#if>
+    </#list>
+
+<table style="width:100%; border-left:0.5px single black; border-right:0.5px single black; table-layout: fixed; word-break: break-all; border-collapse: collapse;   margin-top: 15px;">  
+			<tbody> 
+				<tr style="height: 18pt; border-top:0.5px single black;" >  
+					<td style="width: 50pt; border-bottom:0.5px single black; vertical-align: middle; align: center;">  
+						<strong>ClaveProdServ</strong> 
+					</td> 
+					<td style="width: 50pt; border-bottom:0.5px single black; vertical-align: middle; align: center;"> 
+						<strong>Cantidad</strong> 
+					</td> 
+					<td style="width: 56pt; border-bottom:0.5px single black; vertical-align: middle; align: left;">  
+						<strong>Unidades</strong> 
+					</td> 
+					<td style="width: 170pt; border-bottom:0.5px single black; vertical-align: middle; align: left;">  
+						<strong>Descripci&oacute;n</strong> 
+					</td> 
+					<td style="width: 56pt; border-bottom:0.5px single black; vertical-align: middle; align: right;">  
+						<strong>Precio Unitario</strong> 
+					</td> 
+					<td style="width: 56pt; border-bottom:0.5px single black; vertical-align: middle; align: center;">  
+						<strong>Importe</strong> 
+					</td> 
+				</tr> 
+			</tbody> 
+		</table>  
+		<table style="width:100%; border-left:0.5px single black; border-right:0.5px single black; border-bottom:0.5px single black;  border-top:0.5px single black;  table-layout: fixed; word-break: break-all; border-collapse: collapse;">   
+			<tbody> 
+					<tr> 
+						<td style="align: center; width: 50pt;">  84111506  <br/><br/></td> 
+						<td style="align: center; width: 50pt;">  1  <br/><br/></td> 
+						<td style="align: left; width: 56pt;">  ACT <br/><br/></td> 
+						<td style="align: left; width: 170pt;">  Pago <br/><br/></td> 
+						<td style="align: right; width: 56pt;">$&nbsp;  0.00  <br/><br/></td> 
+						<td style="align: center; width: 56pt;">$&nbsp;  0.00  <br/><br/></td> 
+					</tr> 
+			</tbody> 
+		</table> 
+  
+		<table style="width:100%;   border-spacing: 0; table-layout: fixed; word-break:break-all;   margin-top: 15px;" border="0.5px" cellspacing="0" cellpadding="0" >  
+			<tbody>  
+				<tr> 
+					<td style="width: 60%;" rowspan="8"> 
+						<table style=" table-layout: fixed; word-break:break-all; border-collapse:collapse; margin-top:10px; margin-left:10px; margin-bottom:10px;" cellspacing="0" cellpadding="0">  
+							<tbody> 
+								<tr> 
+		 							<td style="width: 30%; align: left;">Importe Con Letra</td> 
+									<td style="width: 5%;">&nbsp;:&nbsp;</td> 
+									<td style="width: 65%; ">CERO, 00/100 XX  </td> 
+								</tr> 
+								<tr> 
+		 							<td style="width: 30%; align: left;">Tipo de comprobante</td> 
+									<td style="width: 5%;">&nbsp;:&nbsp;</td> 
+									<td style="width: 65%; ">P - PAGO </td> 
+								</tr> 
+								<tr> 
+		 							<td style="width: 30%; align: left;">Moneda</td> 
+									<td style="width: 5%;">&nbsp;:&nbsp;</td> 
+									<td style="width: 65%;">XXX - Los códigos asignados para las transacciones en que intervenga ninguna moneda  </td> 
+								</tr> 
+							</tbody> 
+						</table> 
+					</td> 
+					<td style="vertical-align: top;"> 
+						<br /> 
+						<table style="align: right; width: 40%; height: 70pt; border-spacing: 0; table-layout: fixed; word-break:break-all; margin-right:10px; margin-bottom:10px;" cellspacing="0" cellpadding="0">  
+							<tbody> 
+								<tr> 
+									<td style="align: right; width: 90px;"> 
+										<strong>SUBTOTAL: &nbsp; &nbsp;</strong> 
+									</td> 
+									<td style="align: right; width: 190px;border-bottom:1.5px single silver;">$&nbsp;  0.00   </td> 
+								</tr> 
+								<tr> 
+									<td style="align: right; width: 90px;"> 
+										<strong>TOTAL: &nbsp; &nbsp;</strong> 
+									</td> 
+									<td style="align: right; width: 190px;">$&nbsp;  0.00   <br /><br /> </td> 
+								</tr> 
+							</tbody> 
+						</table> 
+					</td> 
+				</tr> 
+			</tbody> 
+		</table> 
+
+
+  
+<table style="width: 100%; table-layout: fixed; word-break:break-all; margin-top:20px; font-size: 6px;"> 
+			<tbody> <#assign qrcodeImage = "data:image/png;base64, " + certData.custbody_mx_cfdi_qr_code >
+				<tr style="height: 102pt; margin-top:2pt; margin-bottom:2pt; margin-left:2pt; margin-right:2pt;"> 
+					<td style="width: 91pt; height: 122px; vertical-align: top;"><img style="width: 80px;height:80px" src="${qrcodeImage}" /></td> 
+					<td style="width: 469pt; height: 122px; border-top:0.5px single black; border-bottom:0.5px single black; border-left:0.5px single black; border-right:0.5px single black;"> <div style="align: left;"> 
+							<strong>CADENA ORIGINAL</strong> 
+							<br />${certData.custbody_mx_cfdi_cadena_original}
+						</div> 
+						<div style="align: left;"> 
+							<strong>SELLO DIGITAL DEL CFDI</strong> 
+							<br />${certData.custbody_mx_cfdi_signature}
+						</div> 
+						<div style="align: left;"> 
+							<strong>SELLO DEL SAT</strong> 
+							<br />${certData.custbody_mx_cfdi_sat_signature} 
+						</div> 
+					</td> 
+				</tr> 
+			</tbody> 
+		</table> 
+
+  <span style="margin-top:20px;">Este documento es una representaci&oacute;n impresa de un CFDi</span>   
+
+
+</body>
+</pdf>

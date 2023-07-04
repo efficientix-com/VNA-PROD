@@ -1,0 +1,9 @@
+<advancedpdftemplate scriptid="custtmpl_318_6212323_256" standard="STDTMPLEMPTY">
+  <description></description>
+  <displaysourcecode>T</displaysourcecode>
+  <isinactive>F</isinactive>
+  <preferred>F</preferred>
+  <printtype>TRANSACTION</printtype>
+  <title>Customer Payment Mexico certified PDF | VNA ok</title>
+  <trantype>CUSTPYMT</trantype>
+</advancedpdftemplate>
