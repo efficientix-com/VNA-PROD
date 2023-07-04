@@ -92,6 +92,10 @@
                 font-size: 9px;
                 table-layout: fixed;
             }
+            table.testing * {
+                /* TESTING */
+                border: 1px solid red;
+            }
             th {
                 font-weight: bold;
                 font-size: 8px;
@@ -514,30 +518,38 @@
 
                                         <tr>
                                             <td colspan="4" style="align: center; ">${Conceptos[contador].atributos.ClaveProdServ}<br/><br/></td>
+
                                             <#if comercioExterior?has_content>
                                                 <td colspan="4" style="align: center; font-size:8px">${comercioExterior[contador].atributos.FraccionArancelaria}<br/><br/></td>
                                             </#if>
-                                                <td colspan="3" style="align: left; ">${item.item}<br/><br/></td>
-                                                <#assign cantidad = Conceptos[contador].atributos.Cantidad?number>
-                                                <td colspan="3" style="align: center; font-size: 6pt;">${cantidad?string[",##0"]} <br/><br/></td>
-                                                <#if item.itemtype == "kit" || item.itemtype == "Kit">
-                                                    <td colspan="2" style="align: left; ">${item.itemtype}<br/><br/></td>
-                                                <#else>
-                                                    <td colspan="2" style="align: left; ">${item.units}<br/><br/></td>
-                                                </#if>
-                                                <td colspan="3" style="align: left; ">${Conceptos[contador].atributos.ClaveUnidad}<br/><br/></td>
-                                                <#if comercioExterior?has_content>
-                                                    <td colspan="4" style="align: left; ">${item.custcol_efx_fe_ce_uni_aduana}<br/><br/></td>
-                                                </#if>
-                                                <td colspan="6" style="align: left; " >${Conceptos[contador].atributos.Descripcion}<br/><br/></td>
 
-                                                <#assign tras = dataXML.Impuestos.Traslados.Traslado.atributos>
-                                                <#if tras?has_content>
-                                                    <td colspan="4" style="align: left;">${tras.Impuesto} IVA <br/> <span style=" font-size: 7pt">${tras.Importe}</span></td>
-                                                </#if>
+                                            <td colspan="3" style="align: left;">${item.item}<br/><br/></td>
 
-                                                <td colspan="3" style="align: right;">${Conceptos[contador].atributos.ValorUnitario?number?string[",##0.00"]}<br/><br/></td>
-                                                <td colspan="4" style="align: center;">${Conceptos[contador].atributos.Importe?number?string[",##0.00"]}<br/><br/></td>
+                                            <#assign cantidad = Conceptos[contador].atributos.Cantidad?number>
+
+                                            <td colspan="3" style="align: center; font-size: 6pt;">${cantidad?string[",##0"]} <br/><br/></td>
+
+                                            <#if item.itemtype == "kit" || item.itemtype == "Kit">
+                                                <td colspan="2" style="align: left;">${item.itemtype}<br/><br/></td>
+                                            <#else>
+                                                <td colspan="2" style="align: left;">${item.units}<br/><br/></td>
+                                            </#if>
+
+                                            <td colspan="3" style="align: left;">${Conceptos[contador].atributos.ClaveUnidad}<br/><br/></td>
+
+                                            <#if comercioExterior?has_content>
+                                                <td colspan="4" style="align: center;">${item.custcol_efx_fe_ce_uni_aduana}<br/><br/></td>
+                                            </#if>
+
+                                            <td colspan="6" style="align: left;" >${Conceptos[contador].atributos.Descripcion}<br/><br/></td>
+
+                                            <#assign tras = dataXML.Impuestos.Traslados.Traslado.atributos>
+                                            <#if tras?has_content>
+                                                <td colspan="4" style="align: left;">${tras.Impuesto} IVA <br/> <span style=" font-size: 7pt">${tras.Importe}</span></td>
+                                            </#if>
+
+                                            <td colspan="3" style="align: right;">${Conceptos[contador].atributos.ValorUnitario?number?string[",##0.00"]}<br/><br/></td>
+                                            <td colspan="4" style="align: center;">${Conceptos[contador].atributos.Importe?number?string[",##0.00"]}<br/><br/></td>
 
                                         </tr>
                                         <#if item.inventorydetail?has_content>
@@ -1256,7 +1268,7 @@
                 <#--  Si hay Comercio Exterior colocar la tabla completa-->
                 <#if record.custbody_efx_fe_comercio_exterior==true>
                     <#--  Tabla de articulos  -->
-                    <table style="width: 100%; border-left:0.5px single black; border-right:0.5px single black; border-bottom:0.5px single black;  border-top:0.5px single black;  table-layout: fixed; word-break: break-all; border-collapse: collapse; margin-top:20px;">
+                    <table  style="width: 100%; border-left:0.5px single black; border-right:0.5px single black; border-bottom:0.5px single black;  border-top:0.5px single black;  table-layout: fixed; word-break: break-all; border-collapse: collapse; margin-top:20px;">
                         <#list record.item as item>
                             <#assign desglose_json = item.custcol_efx_fe_tax_json>
                             <#if desglose_json?has_content>
@@ -1338,7 +1350,7 @@
                                     <#if item.itemtype == "kit" || item.itemtype == "Kit" || item.itemtype == "KIT">
                                         <td colspan="1" style="align: left; ">KT<br/><br/></td>
                                     <#else>
-                                        <td colspan="1" style="align: left; ">${units_sat}<br/><br/></td>
+                                        <td colspan="3" style="align: left; ">${units_sat}<br/><br/></td>
                                     </#if>
                                 </#if>
                                 <td colspan="4" style="align: left; ">${item.custcol_efx_fe_ce_uni_aduana}<br/><br/></td>

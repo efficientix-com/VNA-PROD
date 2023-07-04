@@ -1,5 +1,10 @@
 <?xml version="1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
 <pdf>
+<#if record.entity.custentity_efx_fe_version?has_content>
+        <#assign version_fe = record.entity.custentity_efx_fe_version?keep_after(" ")>
+    <#else>
+        <#assign version_fe = "0">
+    </#if>
     <#if custom?has_content>
     <#setting locale=custom.locale>
     <#assign labels = custom.labels>
@@ -9,6 +14,7 @@
     <#assign "certData" = record>
 </#if>
 <#assign "satCodes" = custom.satcodes>
+
 
 <#if custom.multiCurrencyFeature == "true">
 <#assign "currencyCode" = record.currencysymbol>
@@ -354,11 +360,13 @@ hr {
     </tr>
 
       </#list>
-
-
-
-
-
+  </#if>
+  <#if version_fe == "4.0">
+      <tr style="padding:5px 0px;" align="center">
+          <td colspan="1" style="font-size: 4pt; padding-top: 1px;  padding-bottom: 1px;"><b>Objeto de impuesto:</b>
+          </td>
+          <td colspan="3" style="font-size: 4pt; padding-top: 1px;  padding-bottom: 1px;">${item.custcol_mx_txn_line_sat_tax_object}</td>
+      </tr>
   </#if>
   </#list>
   <tr><td colspan="6"><strong>Notas:</strong><br/>${record.memo}</td></tr></table>
