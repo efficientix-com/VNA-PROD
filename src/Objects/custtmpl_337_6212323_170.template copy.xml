@@ -473,15 +473,7 @@
                                 <#list record.item as item>
                                     <#if item.itemtype != "Discount" || item.itemtype != "Descuento">
                                         <tr>
-                                            <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
-                                            <#assign "detalle_inventario" = detalle_inventario_json?eval>
-                                            <#list detalle_inventario as detalle_inv>
-                                                <#if detalle_inv.porta_casco?has_content>
-                                                    <td colspan="44" style="align: center; border-bottom:0.5px single black;" ><b>Concepto   ${item_index+1} </b></td>
-                                                <#else>
-                                                    <td colspan="40" style="align: center; border-bottom:0.5px single black;" ><b>Concepto   ${item_index+1} </b></td>
-                                                </#if>
-                                            </#list>
+                                            <td colspan="40" style="align: center; border-bottom:0.5px single black;" ><b>Concepto   ${item_index+1} </b></td>
                                         </tr>
                                         <#--  Cabecera de tabla  -->
                                         <tr >
@@ -567,15 +559,20 @@
                                                 <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4"><strong>Pedimento</strong></td>
                                                 <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4"><strong>Fecha Entrada</strong></td>
                                                 <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;" colspan="4"><strong>Repuve</strong></td>
-                                                <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
-                                                <#assign "detalle_inventario" = detalle_inventario_json?eval>
-                                                <#list detalle_inventario as detalle_inv>
-                                                    <#if detalle_inv.porta_casco?has_content>
-                                                        <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-left:0.5px single black;" colspan="4"><strong>Porta Casco</strong></td>
-                                                    </#if>
-                                                </#list>
                                             </tr>
-                                            <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
+                                            <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json >
+                                            <#if item.custcol_efx_invdet_json2?has_content>
+                                                <#assign "detalle_inventario_json" = detalle_inventario_json + item.custcol_efx_invdet_json2>
+                                            </#if>
+                                            <#if item.custcol_efx_invdet_json3?has_content>
+                                                <#assign "detalle_inventario_json" = detalle_inventario_json + item.custcol_efx_invdet_json3>
+                                            </#if>
+                                            <#if item.custcol_efx_invdet_json4?has_content>
+                                                <#assign "detalle_inventario_json" = detalle_inventario_json + item.custcol_efx_invdet_json4>
+                                            </#if>
+                                            <#if item.custcol_efx_invdet_json5?has_content>
+                                                <#assign "detalle_inventario_json" = detalle_inventario_json + item.custcol_efx_invdet_json5>
+                                            </#if>
                                             <#assign "detalle_inventario" = detalle_inventario_json?eval>
                                             <#list detalle_inventario as detalle_inv>
                                                 <tr>
@@ -588,9 +585,6 @@
                                                     </#if>
                                                     <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">${detalle_inv.fecha_entrada_pedimento}</td>
                                                     <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;" colspan="4">${detalle_inv.repuve}</td>
-                                                    <#if detalle_inv.porta_casco?has_content>
-                                                        <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-left:0.5px single black;" colspan="4">Sí</td>
-                                                    </#if>
                                                 </tr>
                                             </#list>
                                         </#if>
@@ -617,15 +611,7 @@
 
                                 </#list>
                                 <tr>
-                                    <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
-                                    <#assign "detalle_inventario" = detalle_inventario_json?eval>
-                                    <#list detalle_inventario as detalle_inv>
-                                        <#if detalle_inv.porta_casco?has_content>
-                                            <td colspan="43"><strong>Notas:</strong><br/>${record.memo}</td>
-                                        <#else>
-                                            <td colspan="39"><strong>Notas:</strong><br/>${record.memo}</td>
-                                        </#if>
-                                    </#list>
+                                    <td colspan="39"><strong>Notas:</strong><br/>${record.memo}</td>
                                 </tr>
                             </#if>
                         </table>
@@ -633,15 +619,7 @@
                         <table style="width: 100%; border-left:0.5px single black; border-right:0.5px single black; border-bottom:0.5px single black;  border-top:0.5px single black;  table-layout: fixed; word-break: break-all; border-collapse: collapse; margin-top:20px;">
                             <#list record.item as item>
                                 <tr>
-                                    <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
-                                    <#assign "detalle_inventario" = detalle_inventario_json?eval>
-                                    <#list detalle_inventario as detalle_inv>
-                                        <#if detalle_inv.porta_casco?has_content>
-                                            <td colspan="44" style="align: center; border-bottom:0.5px single black;" ><b>Concepto   ${item_index+1} </b></td>
-                                        <#else>
-                                            <td colspan="40" style="align: center; border-bottom:0.5px single black;" ><b>Concepto   ${item_index+1} </b></td>
-                                        </#if>
-                                    </#list>
+                                    <td colspan="40" style="align: center; border-bottom:0.5px single black;" ><b>Concepto   ${item_index+1} </b></td>
                                 </tr>
                                 <tr style="height: 18pt;" >
                                     <td colspan="4" style="border-bottom:0.5px single black; vertical-align: middle; align: center;">
@@ -713,15 +691,20 @@
                                     <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4"><strong>Pedimento</strong></td>
                                     <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4"><strong>Fecha Entrada</strong></td>
                                     <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;" colspan="4"><strong>Repuve</strong></td>
-                                    <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
-                                    <#assign "detalle_inventario" = detalle_inventario_json?eval>
-                                    <#list detalle_inventario as detalle_inv>
-                                        <#if detalle_inv.porta_casco?has_content>
-                                            <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-left:0.5px single black;" colspan="4"><strong>Porta Casco</strong></td>
-                                        </#if>
-                                    </#list>
                                 </tr>
-                                <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
+                                <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json >
+                                <#if item.custcol_efx_invdet_json2?has_content>
+                                    <#assign "detalle_inventario_json" = detalle_inventario_json + item.custcol_efx_invdet_json2>
+                                </#if>
+                                <#if item.custcol_efx_invdet_json3?has_content>
+                                    <#assign "detalle_inventario_json" = detalle_inventario_json + item.custcol_efx_invdet_json3>
+                                </#if>
+                                <#if item.custcol_efx_invdet_json4?has_content>
+                                    <#assign "detalle_inventario_json" = detalle_inventario_json + item.custcol_efx_invdet_json4>
+                                </#if>
+                                <#if item.custcol_efx_invdet_json5?has_content>
+                                    <#assign "detalle_inventario_json" = detalle_inventario_json + item.custcol_efx_invdet_json5>
+                                </#if>
                                 <#assign "detalle_inventario" = detalle_inventario_json?eval>
                                 <#list detalle_inventario as detalle_inv>
                                     <tr>
@@ -734,9 +717,6 @@
                                         </#if>
                                         <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">${detalle_inv.fecha_entrada_pedimento}</td>
                                         <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;" colspan="4">${detalle_inv.repuve}</td>
-                                        <#if detalle_inv.porta_casco?has_content>
-                                            <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-left:0.5px single black;" colspan="4">Sí</td>
-                                        </#if>
                                     </tr>
                                 </#list>
                             </#if>
@@ -758,15 +738,7 @@
                                 </#if>
                             </#if>
                             <tr>
-                                <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
-                                <#assign "detalle_inventario" = detalle_inventario_json?eval>
-                                <#list detalle_inventario as detalle_inv>
-                                    <#if detalle_inv.porta_casco?has_content>
-                                        <td colspan="43"><strong>Notas:</strong><br/>${record.memo}</td>
-                                    <#else>
-                                        <td colspan="39"><strong>Notas:</strong><br/>${record.memo}</td>
-                                    </#if>
-                                </#list>
+                                <td colspan="39"><strong>Notas:</strong><br/>${record.memo}</td>
                             </tr>
                         </table>
                     </#if>
@@ -931,15 +903,7 @@
                                 <#assign desglose = "No hay JSON de linea">
                             </#if>
                             <tr>
-                                <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
-                                <#assign "detalle_inventario" = detalle_inventario_json?eval>
-                                <#list detalle_inventario as detalle_inv>
-                                    <#if detalle_inv.porta_casco?has_content>
-                                        <td colspan="44" style="align: center; border-bottom:0.5px single black;" ><b>Concepto   ${item_index+1} </b></td>
-                                    <#else>
-                                        <td colspan="40" style="align: center; border-bottom:0.5px single black;" ><b>Concepto   ${item_index+1} </b></td>
-                                    </#if>
-                                </#list>
+                                <td style="align: center; border-bottom:0.5px single black;" colspan="21"><b>Concepto   ${item_index+1} </b></td>
                             </tr>
                             <tr style="height: 18pt;" >
                                 <td colspan="2" style="border-bottom:0.5px single black; vertical-align: middle; align: center;">
@@ -1019,15 +983,20 @@
                                 <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4"><strong>Pedimento</strong></td>
                                 <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4"><strong>Fecha Entrada</strong></td>
                                 <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;" colspan="4"><strong>Repuve</strong></td>
-                                <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
-                                <#assign "detalle_inventario" = detalle_inventario_json?eval>
-                                <#list detalle_inventario as detalle_inv>
-                                    <#if detalle_inv.porta_casco?has_content>
-                                        <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-left:0.5px single black;" colspan="4"><strong>Porta Casco</strong></td>
-                                    </#if>
-                                </#list>
                             </tr>
-                            <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
+                            <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json >
+                            <#if item.custcol_efx_invdet_json2?has_content>
+                                <#assign "detalle_inventario_json" = detalle_inventario_json + item.custcol_efx_invdet_json2>
+                            </#if>
+                            <#if item.custcol_efx_invdet_json3?has_content>
+                                <#assign "detalle_inventario_json" = detalle_inventario_json + item.custcol_efx_invdet_json3>
+                            </#if>
+                            <#if item.custcol_efx_invdet_json4?has_content>
+                                <#assign "detalle_inventario_json" = detalle_inventario_json + item.custcol_efx_invdet_json4>
+                            </#if>
+                            <#if item.custcol_efx_invdet_json5?has_content>
+                                <#assign "detalle_inventario_json" = detalle_inventario_json + item.custcol_efx_invdet_json5>
+                            </#if>
                             <#assign "detalle_inventario" = detalle_inventario_json?eval>
                             <#list detalle_inventario as detalle_inv>
                                 <tr>
@@ -1040,9 +1009,6 @@
                                 </#if>
                                 <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">${detalle_inv.fecha_entrada_pedimento}</td>
                                 <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;" colspan="4">${detalle_inv.repuve}</td>
-                                <#if detalle_inv.porta_casco?has_content>
-                                    <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-left:0.5px single black;" colspan="4">Sí</td>
-                                </#if>
                                 </tr>
                             </#list>
                             </#if>
@@ -1056,15 +1022,7 @@
                             </#if>  -->
                         </#list>
                         <tr>
-                            <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
-                            <#assign "detalle_inventario" = detalle_inventario_json?eval>
-                            <#list detalle_inventario as detalle_inv>
-                                <#if detalle_inv.porta_casco?has_content>
-                                    <td colspan="25"><strong>Notas:</strong><br/>${record.memo}</td>
-                                <#else>
-                                    <td colspan="21"><strong>Notas:</strong><br/>${record.memo}</td>
-                                </#if>
-                            </#list>
+                            <td colspan="21"><strong>Notas:</strong><br/>${record.memo}</td>
                         </tr>
                     </table>
                 </#if>
@@ -1355,20 +1313,7 @@
                                 <#assign desglose = "No hay JSON de linea">
                             </#if>
                             <tr>
-                                <#assign detalle_inventario_json = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
-                                <#if detalle_inventario_json?has_content>
-                                    <#assign detalle_inventario = detalle_inventario_json?eval>
-                                    <#list detalle_inventario as detalle_inv>
-                                        <#if detalle_inv.porta_casco?has_content>
-                                            <#assign porta_casco = porta_casco+1>
-                                        </#if>
-                                    </#list>
-                                </#if>
-                                <#if porta_casco gt 0>
-                                    <td colspan="44" style="align: center; border-bottom:0.5px single black;" ><b>Concepto   ${item_index+1} </b></td>
-                                <#else>
-                                    <td colspan="40" style="align: center; border-bottom:0.5px single black;" ><b>Concepto   ${item_index+1} </b></td>
-                                </#if>
+                                <td colspan="40" style="align: center; border-bottom:0.5px single black;" ><b>Concepto   ${item_index+1} </b></td>
                             </tr>
                             <tr style="height: 18pt;" >
                                 <td colspan="4" style="border-bottom:0.5px single black; vertical-align: middle; align: center;">
@@ -1461,15 +1406,20 @@
                                     <td colspan="7" style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;"><strong>Pedimento</strong></td>
                                     <td colspan="7" style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;"><strong>Fecha Entrada</strong></td>
                                     <td colspan="7" style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;"><strong>Repuve</strong></td>
-                                    <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
-                                    <#assign "detalle_inventario" = detalle_inventario_json?eval>
-                                    <#list detalle_inventario as detalle_inv>
-                                        <#if detalle_inv.porta_casco?has_content>
-                                            <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-left:0.5px single black;" colspan="4"><strong>Porta Casco</strong></td>
-                                        </#if>
-                                    </#list>
                                 </tr>
-                                <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
+                                <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json >
+                                <#if item.custcol_efx_invdet_json2?has_content>
+                                    <#assign "detalle_inventario_json" = detalle_inventario_json + item.custcol_efx_invdet_json2>
+                                </#if>
+                                <#if item.custcol_efx_invdet_json3?has_content>
+                                    <#assign "detalle_inventario_json" = detalle_inventario_json + item.custcol_efx_invdet_json3>
+                                </#if>
+                                <#if item.custcol_efx_invdet_json4?has_content>
+                                    <#assign "detalle_inventario_json" = detalle_inventario_json + item.custcol_efx_invdet_json4>
+                                </#if>
+                                <#if item.custcol_efx_invdet_json5?has_content>
+                                    <#assign "detalle_inventario_json" = detalle_inventario_json + item.custcol_efx_invdet_json5>
+                                </#if>
                                 <#assign "detalle_inventario" = detalle_inventario_json?eval>
                                 <#list detalle_inventario as detalle_inv>
                                     <tr>
@@ -1482,9 +1432,6 @@
                                         </#if>
                                         <td colspan="7" style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" >${detalle_inv.fecha_entrada_pedimento}</td>
                                         <td colspan="7" style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;" >${detalle_inv.repuve}</td>
-                                        <#if detalle_inv.porta_casco?has_content>
-                                            <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-left:0.5px single black;" colspan="4">Sí</td>
-                                        </#if>
                                     </tr>
                                 </#list>
                             </#if>
@@ -1498,22 +1445,7 @@
                             </#if>
                         </#list>
                         <tr>
-                            <#list record.item as item>
-                                <#assign detalle_inventario_json = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
-                            </#list>
-                            <#if detalle_inventario_json?has_content>
-                                <#assign detalle_inventario = detalle_inventario_json?eval>
-                                <#list detalle_inventario as detalle_inv>
-                                    <#if detalle_inv.porta_casco?has_content>
-                                        <#assign porta_casco = porta_casco+1>
-                                    </#if>
-                                </#list>
-                            </#if>
-                            <#if porta_casco gt 0>
-                                <td colspan="43"><strong>Notas:</strong><br/>${record.memo}</td>
-                            <#else>
-                                <td colspan="39"><strong>Notas:</strong><br/>${record.memo}</td>
-                            </#if>
+                            <td colspan="39"><strong>Notas:</strong><br/>${record.memo}</td>
                         </tr>
                     </table>
                     <#--  Tabla de comercio exterior  -->
@@ -1643,92 +1575,46 @@
                 <#else>
                     <#--  Si no hay Comercio Exterior no colocar la tabla y ajustar los campos  -->
                     <#--  Tabla de articulos  -->
-                    <#assign porta_casco = 0>
-                    <table style="width: 100%; border-left:0.5px single black; border-right:0.5px single black; border-bottom:0.5px single black;  border-top:0.5px single black;   border-collapse: collapse; margin-top:20px;">
+                    <table style="width: 100%; border-left:0.5px single black; border-right:0.5px single black; border-bottom:0.5px single black;  border-top:0.5px single black;  word-break: break-all; border-collapse: collapse; margin-top:20px;">
                         <#list record.item as item>
                             <#assign desglose_json = item.custcol_efx_fe_tax_json>
                             <#if desglose_json?has_content>
-                                <#assign desglose = desglose_json?eval>
+                            <#assign desglose = desglose_json?eval>
                             <#else>
-                                <#assign desglose = "No hay JSON de linea">
+                            <#assign desglose = "No hay JSON de linea">
                             </#if>
                             <tr>
-                                <#assign detalle_inventario_json = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
-                                <#if detalle_inventario_json?has_content>
-                                    <#assign detalle_inventario = detalle_inventario_json?eval>
-                                    <#list detalle_inventario as detalle_inv>
-                                        <#if detalle_inv.porta_casco?has_content>
-                                            <#assign porta_casco = porta_casco+1>
-                                        </#if>
-                                    </#list>
-                                </#if>
-                                <#if porta_casco gt 0>
-                                    <td colspan="25" style="align: center; border-bottom:0.5px single black;" ><b>Concepto   ${item_index+1} </b></td>
-                                <#else>
-                                    <td colspan="21" style="align: center; border-bottom:0.5px single black;" ><b>Concepto   ${item_index+1} </b></td>
-                                </#if>
+                            <td style="align: center; border-bottom:0.5px single black;" colspan="21"><b>Concepto   ${item_index+1} </b></td>
                             </tr>
-                            <#if porta_casco gt 0>
-                                <tr style="height: 18pt;" >
-                                    <td colspan="3" style="border-bottom:0.5px single black; vertical-align: middle; align: center;">
-                                        <strong>ClaveProd<br />Serv</strong>
-                                    </td>
-                                    <td colspan="4" style="border-bottom:0.5px single black; vertical-align: middle; align: left; ">
-                                        <strong>No. Parte</strong>
-                                    </td>
-                                    <td colspan="1" style="border-bottom:0.5px single black; vertical-align: middle; align: center;">
-                                        <strong>Cant</strong>
-                                    </td>
-                                    <td colspan="1" style=" border-bottom:0.5px single black; vertical-align: middle; align: left;">
-                                        <strong>Unid</strong>
-                                    </td>
-                                    <td colspan="1" style=" border-bottom:0.5px single black; vertical-align: middle; align: left;">
-                                        <strong><span style="font-size: 4pt;" >Clave</span><br /><span style="font-size: 3pt;" >Unidad</span></strong>
-                                    </td>
-                                    <td colspan="7" style=" border-bottom:0.5px single black; vertical-align: middle; align: left; font-size: 8px;">
-                                        <strong>Descripcion</strong>
-                                    </td>
-                                    <td colspan="2" style="border-bottom:0.5px single black; vertical-align: middle; align: left; font-size: 7px;">
-                                        <strong>Impuestos</strong>
-                                    </td>
-                                    <td colspan="3" style="border-bottom:0.5px single black; vertical-align: middle; align: right;">
-                                        <strong>Precio Unitario</strong>
-                                    </td>
-                                    <td colspan="3" style="border-bottom:0.5px single black; vertical-align: middle; align: center;">
-                                        <strong>Importe</strong>
-                                    </td>
-                                </tr>
-                            <#else>
-                                <tr style="height: 18pt;" >
-                                    <td colspan="2" style="border-bottom:0.5px single black; vertical-align: middle; align: center;">
-                                        <strong>ClaveProd<br />Serv</strong>
-                                    </td>
-                                    <td colspan="4" style="border-bottom:0.5px single black; vertical-align: middle; align: left; ">
-                                        <strong>No. Parte</strong>
-                                    </td>
-                                    <td colspan="1" style="border-bottom:0.5px single black; vertical-align: middle; align: center;">
-                                        <strong>Cant</strong>
-                                    </td>
-                                    <td colspan="1" style=" border-bottom:0.5px single black; vertical-align: middle; align: left;">
-                                        <strong>Unid</strong>
-                                    </td>
-                                    <td colspan="1" style=" border-bottom:0.5px single black; vertical-align: middle; align: left;">
-                                        <strong><span style="font-size: 4pt;" >Clave</span><br /><span style="font-size: 4pt;" >Unidad</span></strong>
-                                    </td>
-                                    <td colspan="6" style=" border-bottom:0.5px single black; vertical-align: middle; align: left; font-size: 8px;">
-                                        <strong>Descripcion</strong>
-                                    </td>
-                                    <td colspan="2" style="border-bottom:0.5px single black; vertical-align: middle; align: left; font-size: 8px;">
-                                        <strong>Impuestos</strong>
-                                    </td>
-                                    <td colspan="2" style="border-bottom:0.5px single black; vertical-align: middle; align: right;">
-                                        <strong>Precio Unitario</strong>
-                                    </td>
-                                    <td colspan="2" style="border-bottom:0.5px single black; vertical-align: middle; align: center;">
-                                        <strong>Importe</strong>
-                                    </td>
-                                </tr>
-                            </#if>
+                            <tr style="height: 18pt;" >
+                            <td colspan="2" style="border-bottom:0.5px single black; vertical-align: middle; align: center;">
+                                <strong>ClaveProd<br />Serv</strong>
+                            </td>
+                            <td colspan="4" style="border-bottom:0.5px single black; vertical-align: middle; align: left; ">
+                                <strong>No. Parte</strong>
+                            </td>
+                            <td colspan="1" style="border-bottom:0.5px single black; vertical-align: middle; align: center;">
+                                <strong>Cant</strong>
+                            </td>
+                            <td colspan="1" style=" border-bottom:0.5px single black; vertical-align: middle; align: left;">
+                                <strong>Unid</strong>
+                            </td>
+                            <td colspan="1" style=" border-bottom:0.5px single black; vertical-align: middle; align: left;">
+                                <strong><span style="font-size: 4pt;" >Clave</span><br /><span style="font-size: 4pt;" >Unidad</span></strong>
+                            </td>
+                            <td colspan="6" style=" border-bottom:0.5px single black; vertical-align: middle; align: left; font-size: 8px;">
+                                <strong>Descripcion</strong>
+                            </td>
+                            <td colspan="2" style="border-bottom:0.5px single black; vertical-align: middle; align: left; font-size: 8px;">
+                                <strong>Impuestos</strong>
+                            </td>
+                            <td colspan="2" style="border-bottom:0.5px single black; vertical-align: middle; align: right;">
+                                <strong>Precio Unitario</strong>
+                            </td>
+                            <td colspan="2" style="border-bottom:0.5px single black; vertical-align: middle; align: center;">
+                                <strong>Importe</strong>
+                            </td>
+                            </tr>
                             <#if item.units == "ANT">
                                 <#assign units_sat = "ACT">
                             <#elseif item.units == "SRV" || item.units == "Serv">
@@ -1749,60 +1635,34 @@
                                 <#assign units_sat = item.units>
                             </#if>
 
-                            <#if porta_casco gt 0>
-                                <tr>
-                                    <td colspan="3" style="align: center;">${item.custcol_mx_txn_line_sat_item_code?keep_before(" ")}<br/><br/></td>
-                                    <td colspan="4" style="align: left;">${item.item}<br/><br/></td>
-                                    <#assign cantidad = item.quantity>
-                                    <td colspan="1" style="align: center; font-size: 6pt;">${cantidad?string[",##0"]}<br/><br/></td>
-                                    <#if item.itemtype == "kit" || item.itemtype == "Kit">
-                                        <td colspan="1" style="align: left; ">${item.itemtype}<br/><br/></td>
-                                    <#else>
-                                        <td colspan="1" style="align: left; ">${item.units}<br/><br/></td>
-                                    </#if>
-                                    <td colspan="1" style="align: left; ">${units_sat}<br/><br/></td>
-                                    <td colspan="7" style="align: left;">${item.description}<br/><br/></td>
-                                    <#if desglose.iva.name?has_content>
-                                        <td colspan="2" style="align: left;">${desglose.iva.factor} IVA <br/> <span style=" font-size: 7pt">${desglose.iva.importe}</span></td>
-                                    </#if>
-
-                                    <td colspan="3" style="align: right; ">
-                                        <#if item.rate?has_content>
-                                            ${item.rate?string[",##0.00"]}<br/><br/>
-                                        <#else>
-                                            0.00<br/><br/>
-                                        </#if>
-                                    </td>
-                                    <td colspan="3" style="align: center; ">${item.grossamt}<br/><br/></td>
-                                </tr>
+                            <tr>
+                            <td colspan="2" style="align: center;">${item.custcol_mx_txn_line_sat_item_code?keep_before(" ")}<br/><br/></td>
+                            <td colspan="4" style="align: left;">${item.item}<br/><br/></td>
+                            <#assign cantidad = item.quantity>
+                            <td colspan="1" style="align: center; font-size: 6pt;">${cantidad?string[",##0"]}<br/><br/></td>
+                            <#if item.itemtype == "kit" || item.itemtype == "Kit">
+                                <td colspan="1" style="align: left; ">${item.itemtype}<br/><br/></td>
                             <#else>
-                                <tr>
-                                    <td colspan="2" style="align: center;">${item.custcol_mx_txn_line_sat_item_code?keep_before(" ")}<br/><br/></td>
-                                    <td colspan="4" style="align: left;">${item.item}<br/><br/></td>
-                                    <#assign cantidad = item.quantity>
-                                    <td colspan="1" style="align: center; font-size: 6pt;">${cantidad?string[",##0"]}<br/><br/></td>
-                                    <#if item.itemtype == "kit" || item.itemtype == "Kit">
-                                        <td colspan="1" style="align: left; ">${item.itemtype}<br/><br/></td>
-                                    <#else>
-                                        <td colspan="1" style="align: left; ">${item.units}<br/><br/></td>
-                                    </#if>
-                                    <td colspan="1" style="align: left; ">${units_sat}<br/><br/></td>
-                                    <td colspan="6" style="align: left;">${item.description}<br/><br/></td>
-                                    <#if desglose.iva.name?has_content>
-                                        <td colspan="2" style="align: left;">${desglose.iva.factor} IVA <br/> <span style=" font-size: 7pt">${desglose.iva.importe}</span></td>
-                                    </#if>
+                                <td colspan="1" style="align: left; ">${item.units}<br/><br/></td>
+                            </#if>
+                            <td colspan="1" style="align: left; ">${units_sat}<br/><br/></td>
+                            <td colspan="6" style="align: left;">${item.description}<br/><br/></td>
 
-                                    <td colspan="2" style="align: right; ">
-                                        <#if item.rate?has_content>
-                                            ${item.rate?string[",##0.00"]}<br/><br/>
-                                        <#else>
-                                            0.00<br/><br/>
-                                        </#if>
-                                    </td>
-                                    <td colspan="2" style="align: center; ">${item.grossamt}<br/><br/></td>
-                                </tr>
+
+
+                              <#if desglose.iva.name?has_content>
+                                <td colspan="2" style="align: left;">${desglose.iva.factor} IVA <br/> <span style=" font-size: 7pt">${desglose.iva.importe}</span></td>
                             </#if>
 
+                            <td colspan="2" style="align: right; ">
+                                <#if item.rate?has_content>
+                                    ${item.rate?string[",##0.00"]}<br/><br/>
+                                <#else>
+                                    0.00<br/><br/>
+                                </#if>
+                            </td>
+                            <td colspan="2" style="align: center; ">${item.grossamt}<br/><br/></td>
+                            </tr>
                             <#if item.inventorydetail?has_content>
                                 <tr>
                                     <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="5"><strong>Número Serial</strong></td>
@@ -1810,31 +1670,20 @@
                                     <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4"><strong>Pedimento</strong></td>
                                     <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4"><strong>Fecha Entrada</strong></td>
                                     <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;" colspan="4"><strong>Repuve</strong></td>
-                                    <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
-                                    <#assign "detalle_inventario" = detalle_inventario_json?eval>
-                                    <#list detalle_inventario as detalle_inv>
-                                        <#if detalle_inv.porta_casco?has_content>
-                                            <#assign porta_casco = porta_casco+1>
-                                            <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-left:0.5px single black;" colspan="4"><strong>Porta Casco</strong></td>
-                                        </#if>
-                                    </#list>
                                 </tr>
                                 <#assign "detalle_inventario_json" = item.custcol_efx_invdet_json + item.custcol_efx_invdet_json2 + item.custcol_efx_invdet_json3 + item.custcol_efx_invdet_json4 + item.custcol_efx_invdet_json5>
-                                <#assign "detalle_inventario" = detalle_inventario_json?eval>
+                                <#assign detalle_inventario = detalle_inventario_json?eval>
                                 <#list detalle_inventario as detalle_inv>
                                     <tr>
-                                    <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="5">${detalle_inv.inventorynumber}	         </td>
-                                    <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">${detalle_inv.num_motor}</td>
-                                    <#if detalle_inv.inventorynumber?starts_with("3MU")>
-                                        <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">ENSAMBLE EN MEXICO</td>
-                                    <#else>
-                                        <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">${detalle_inv.num_pedimento}</td>
-                                    </#if>
-                                    <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">${detalle_inv.fecha_entrada_pedimento}</td>
-                                    <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;" colspan="4">${detalle_inv.repuve}</td>
-                                    <#if detalle_inv.porta_casco?has_content>
-                                        <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-left:0.5px single black;" colspan="4">Sí</td>
-                                    </#if>
+                                        <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="5">${detalle_inv.inventorynumber}</td>
+                                        <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">${detalle_inv.num_motor}</td>
+                                        <#if detalle_inv.inventorynumber?starts_with("3MU")>
+                                            <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">ENSAMBLE EN MEXICO</td>
+                                        <#else>
+                                            <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">${detalle_inv.num_pedimento}</td>
+                                        </#if>
+                                        <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;border-right:0.5px single black;" colspan="4">${detalle_inv.fecha_entrada_pedimento}</td>
+                                        <td style="align: center; border-bottom:0.5px single black;border-top:0.5px single black;" colspan="4">${detalle_inv.repuve}</td>
                                     </tr>
                                 </#list>
                             </#if>
@@ -1848,11 +1697,7 @@
                             </#if>
                         </#list>
                         <tr>
-                            <#if porta_casco gt 0>
-                                <td colspan="25"><strong>Notas:</strong><br/>${record.memo}</td>
-                            <#else>
-                                <td colspan="21"><strong>Notas:</strong><br/>${record.memo}</td>
-                            </#if>
+                        <td colspan="21"><strong>Notas:</strong><br/>${record.memo}</td>
                         </tr>
                     </table>
                 </#if>
